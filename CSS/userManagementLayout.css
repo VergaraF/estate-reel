@@ -63,7 +63,7 @@ h2{
 #content {
     position: absolute;
     width: 50%;
-    height: 40%;
+    height: auto 0px;
     top: 176px;
     background-color: white;
     margin-left: 25%;
@@ -78,7 +78,10 @@ form{
     height: 100%;
 }
 
-#usn, #pwd{
+#usn, #pwd, #firstN, #lastN, #email, 
+#cpwd, #house_no, #street_name, #apart_no, 
+#city, #province, #zip, #country, #image, #desc,
+#rooms, #bath, #livingRooms, #price {
     background-color: #D4D4BF;
     width: 96%;
     border: none;
@@ -88,7 +91,7 @@ form{
     padding-left: 15px;
 }
 
-#login {
+#login, #createAcc, #upload {
     width: 96%;
     border: none;
     height: 43px;
