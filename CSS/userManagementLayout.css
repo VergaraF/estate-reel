@@ -1,0 +1,104 @@
+@font-face {
+    font-family: headerFont;
+    src: url(kimberley.ttf);
+}
+
+body {
+    background-color: #D4D4BF;
+    text-align: center;
+}
+
+header{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 15px;
+    background-color: #C00;
+    width: 100%;
+    height: 160px;
+    border-bottom: 1px solid white;
+    border-top: 1px solid white;
+    overflow: hidden;
+}
+
+header h1{
+    text-align: center;
+    font-family: headerFont;
+    color: white;
+    font-weight: bolder;
+    font-size: 45pt;
+
+}
+
+h2{
+    text-align: center;
+    font-family: headerFont;
+    color: #C00;
+    font-weight: bolder;
+    font-size: 35pt;
+}
+
+#unloggedMenu{
+    position: absolute;
+    overflow: hidden;
+    top: 150px;
+    margin-left: 60%;
+}
+
+#unloggedMenu button{
+    border: none;
+    width: 75px;
+    height: 23px;
+    border-right: 1px solid white;
+    background-color: #c00;
+    font-weight: bold;
+    font-size: 10pt;
+    color: white;
+}
+
+#unloggedMenu button:hover{
+     background-color: #86000A;
+}
+
+#content {
+    position: absolute;
+    width: 50%;
+    height: 40%;
+    top: 176px;
+    background-color: white;
+    margin-left: 25%;
+    margin-right: 25%;
+
+}
+
+form{
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 80%;
+    height: 100%;
+}
+
+#usn, #pwd{
+    background-color: #D4D4BF;
+    width: 96%;
+    border: none;
+    height: 40px;
+    font-size: 15pt;
+    margin-top: 10px;
+    padding-left: 15px;
+}
+
+#login {
+    width: 96%;
+    border: none;
+    height: 43px;
+    font-size: 18pt;
+    margin-top: 20px;
+    background-color: #424250;
+    color: white;
+}
+
+#error{
+  color: red;
+  visibility: hidden;
+}
