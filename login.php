@@ -21,7 +21,7 @@
 				   	$dbPassword = $row['password'];
 				   	$salt = $row['salt'];
 				   	if(strcmp($username, $dbUsername) === 0 && strcmp($dbPassword, crypt($password, $salt)) === 0){
-						$obj->printMessage("USERNAME", $username, "home.php");
+						$obj->printMessage("USERNAME", $username, "index.html");
 					}else{
 						$obj->printMessage("MESSAGE" ,"The username or password is wrong! Please try again", "login.php");
 					}
@@ -33,7 +33,7 @@
 		<?php
 			include('header.php');
 			if(isset($_SESSION['MESSAGE'])) {
-				echo $_SESSION['MESSAGE'];
+				echo "<p>" . $_SESSION['MESSAGE'] . "</p>";
 				unset($_SESSION['MESSAGE']);
 			}	
 		?>
@@ -43,7 +43,10 @@
            <label id="error">Error : Invalid username or password!</label>
            <input name="login" type="submit" value="Login" id="login"/>
         </form>
-        <p>Remember you need an account to check out.</p>
+    
     </section>
+	    <p>Remember you need an account to have full access to our site.</p>
+		<footer id ="footer"><p> Estate R&eacuteel - Ajmer Singh & Fabian Vergara</p></footer>
 </body>
+
 </html>

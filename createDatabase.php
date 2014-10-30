@@ -67,17 +67,17 @@ $Convo_reply_tbl = "CREATE TABLE conversation_reply (
 
 include('oopClass.php');
 $obj = new Myclass();
-//executeSqlQuery($createDatabase);
+//$obj->executeSqlQuery($createDatabase);
 require('connect.php');
-// $obj->dropTable('conversation_reply');
-// $obj->dropTable('conversation');
-// $obj->dropTable('apartment');
-// $obj->dropTable('address');
-// $obj->dropTable('users');
-// $obj->executeSqlQuery($User_tbl);
-// $obj->executeSqlQuery($Address_tbl);
-// $obj->executeSqlQuery($Apartment_tbl);
-// $obj->executeSqlQuery($Conversation_tbl);
-// $obj->executeSqlQuery($Convo_reply_tbl);
+ //$obj->dropTable('conversation_reply');
+ //$obj->dropTable('conversation');
+ //$obj->dropTable('apartment');
+ //$obj->dropTable('address');
+ //$obj->dropTable('users');
+ $obj->executeSqlQuery($User_tbl);
+ $obj->executeSqlQuery($Address_tbl);
+ $obj->executeSqlQuery($Apartment_tbl);
+ $obj->executeSqlQuery($Conversation_tbl);
+$obj->executeSqlQuery($Convo_reply_tbl);
 //$conn->close();
 ?>

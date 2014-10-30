@@ -63,7 +63,7 @@ h2{
 #content {
     position: absolute;
     width: 50%;
-    height: auto 0px;
+    height: 60% auto;
     top: 176px;
     background-color: white;
     margin-left: 25%;
@@ -101,7 +101,22 @@ form{
     color: white;
 }
 
+#login{
+    margin-bottom: 50px;
+}
+
 #error{
   color: red;
   visibility: hidden;
 }
+
+footer {
+    position: absolute;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    bottom: 0;
+    left: 0;
+}
+
+
