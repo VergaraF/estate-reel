@@ -21,7 +21,7 @@
 				   	$dbPassword = $row['password'];
 				   	$salt = $row['salt'];
 				   	if(strcmp($username, $dbUsername) === 0 && strcmp($dbPassword, crypt($password, $salt)) === 0){
-						$obj->printMessage("USERNAME", $username, "index.html");
+						$obj->printMessage("USERNAME", $username, "index.php");
 					}else{
 						$obj->printMessage("MESSAGE" ,"The username or password is wrong! Please try again", "login.php");
 					}

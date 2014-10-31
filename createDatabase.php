@@ -13,13 +13,13 @@ if ($conn->connect_error) {
 $createDatabase = "CREATE DATABASE PHP_database";
 $User_tbl = "CREATE TABLE users (
 				user_id INT(6) AUTO_INCREMENT PRIMARY KEY, 
-				firstname VARCHAR(30),
-				lastname VARCHAR(30), 
+				firstname VARCHAR(30) NOT NULL,
+				lastname VARCHAR(30) NOT NULL, 
 				email VARCHAR(50),
 				username VARCHAR(30) NOT NULL,
 				password VARCHAR(20) NOT NULL,
 				salt VARCHAR(255) NOT NULL,
-				type VARCHAR(50)
+				type VARCHAR(50) NOT NULL
 			)";
 $Apartment_tbl = "CREATE TABLE apartment (
 					apartmentId INT(6) AUTO_INCREMENT PRIMARY KEY,
@@ -30,7 +30,7 @@ $Apartment_tbl = "CREATE TABLE apartment (
 					no_of_rooms INT,
 					no_of_bathrooms INT,
 					no_of_living_rooms INT,
-					price INT,
+					price INT NOT NULL,
 					FOREIGN KEY (addressId) REFERENCES address (addressId),
 					FOREIGN KEY (user_id) REFERENCES users (user_id)
 				)";
@@ -74,10 +74,10 @@ require('connect.php');
  //$obj->dropTable('apartment');
  //$obj->dropTable('address');
  //$obj->dropTable('users');
- $obj->executeSqlQuery($User_tbl);
- $obj->executeSqlQuery($Address_tbl);
- $obj->executeSqlQuery($Apartment_tbl);
- $obj->executeSqlQuery($Conversation_tbl);
-$obj->executeSqlQuery($Convo_reply_tbl);
+//  $obj->executeSqlQuery($User_tbl);
+//  $obj->executeSqlQuery($Address_tbl);
+//  $obj->executeSqlQuery($Apartment_tbl);
+//  $obj->executeSqlQuery($Conversation_tbl);
+//  $obj->executeSqlQuery($Convo_reply_tbl);
 //$conn->close();
 ?>

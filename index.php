@@ -14,10 +14,17 @@
             <button type="button">Profile</button>
             <button type="button">Messages</button>
             <button type="button">Logout</button>
+            <?php 
+                session_start();
+                if(isset($_SESSION['USERNAME'])){
+                    echo $_SESSION['USERNAME'];
+                    unset($_SESSION['USERNAME']);
+                }
+            ?>
         </aside>
 
         <aside id="unloggedMenu">
-            <button type="button" onClick="window.location.href='index.html'">Home</button>
+            <button type="button" onClick="window.location.href='index.php'">Home</button>
             <button type="button" onClick="window.location.href='login.php'" >Login</button>
             <button type="button" onClick="window.location.href='signUp.php'">Sign Up</button>
         </aside>

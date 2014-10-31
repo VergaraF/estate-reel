@@ -20,7 +20,6 @@
 		}
 
 		$verifyUsername = "SELECT * FROM users WHERE username = '$username'";
-		//$result = mysqli_query($conn, $verifyUser); this does not work for some reason
 		$res = $conn->query($verifyUsername);
 		if(strcmp($password, $confirmPass) === 0){
 			if(mysqli_num_rows($res) == 0){

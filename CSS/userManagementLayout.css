@@ -80,7 +80,7 @@ form{
 
 #usn, #pwd, #firstN, #lastN, #email, 
 #cpwd, #house_no, #street_name, #apart_no, 
-#city, #province, #zip, #country, #image, #desc,
+#city, #province, #zip, #country, #state, #image, #desc,
 #rooms, #bath, #livingRooms, #price {
     background-color: #D4D4BF;
     width: 96%;
@@ -118,5 +118,3 @@ footer {
     bottom: 0;
     left: 0;
 }
-
-
