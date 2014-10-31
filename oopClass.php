@@ -1,7 +1,7 @@
 <?php
-	//session_start();
 	require_once('connect.php');
 	class Myclass{
+		//method to verify the length of the specified string with the specified length
 		public function checkLength($variable, $requiredLength){
 			if(strlen($variable) < $requiredLength){
 				return false;
@@ -9,6 +9,7 @@
 			return true;
 		}
 
+		//method used to print specific message using SESSION variables
 		public function printMessage($sessionVar, $message, $location){
 			$_SESSION[$sessionVar] = $message;
 		    session_write_close();
@@ -16,6 +17,7 @@
 		    exit();
 		}
 
+		//method to insert a user inside the database and print a message friendly message
 		public function insertUser($query){
 			GLOBAL $conn;
 			if ($conn->query($query) === TRUE) {
@@ -23,6 +25,7 @@
 			}
 		}
 
+		//this method is used to execute any query (except SELECT)
 		public function executeSqlQuery($sqlQuery){
 			GLOBAL $conn;
 			if($conn->query($sqlQuery) === TRUE){
@@ -32,14 +35,25 @@
 			}
 		}
 
-		public function dropTable($tableName){
-			$sql = "DROP TABLE $tableName";
+		//this method is used to get the user_id by using username stored in the session when the user is logged in
+		public function getUserId(){
 			GLOBAL $conn;
-			if($conn->query($sql) === TRUE){
-				echo "DROPPED TABLE $tableName";
-			}else{
-				echo "Error: " . $conn->error;
+			$selectUserId = "SELECT user_id FROM users WHERE username = '" . $_SESSION['USERNAME'] . "'";
+			$rs = mysqli_query($conn, $selectUserId);
+			if ($rs->num_rows > 0) {
+				while($row = $rs->fetch_assoc()) {
+					$user_id = $row['user_id'];
+				}
+				return $user_id;
 			}
+			return null;
+		}
+
+		//this method is used to return a resultSet of a SELECT statement
+		public function getResultSetOf($query){
+			GLOBAL $conn;
+			$rs = mysqli_query($conn, $query);
+			return $rs;
 		}
 	}
 ?>

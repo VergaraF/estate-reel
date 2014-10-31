@@ -4,14 +4,17 @@
 </head>
 <body>
 	<?php
+		require('authentication.php');
 		require('connect.php');
+		include('loggedOn.php');
 		//inner join table address and apartment using addressId
 		//store the result into variables and then display them in edit form
 		
 	?>
 
+	<h2>Edit Apartment Info</h2>
 	<form>
-		<table>
+		<table align="center">
 			<tr>
 				<td>House Number</td>
 				<td><input name="house_no" type="text" value="<?php echo ""; ?>" ></td>

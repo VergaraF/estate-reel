@@ -1,7 +1,8 @@
 <?php
 	session_start();
+	include('oopClass.php');
+	$obj = new Myclass();
 	if(!isset($_SESSION['USERNAME']) || (trim($_SESSION['USERNAME']) == '')) {
-		header("location: login.php");
-		exit();
+		$obj->printMessage("MESSAGE", "", "login.php");
 	}
 ?>

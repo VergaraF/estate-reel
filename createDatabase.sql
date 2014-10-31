@@ -8,21 +8,9 @@ CREATE TABLE users (
 	salt VARCHAR(255) NOT NULL,
 	type VARCHAR(50)
 );
-CREATE TABLE apartment (
-	apartmentId INT(6) AUTO_INCREMENT PRIMARY KEY,
-	addressId INT(6) NOT NULL,
+CREATE TABLE apartment_house (
+	apartment_houseId INT(6) AUTO_INCREMENT PRIMARY KEY,
 	user_id INT(6) NOT NULL, 
-	image VARCHAR(255),
-	description VARCHAR(255),
-	no_of_rooms INT,
-	no_of_bathrooms INT,
-	no_of_living_rooms INT,
-	price INT,
-	FOREIGN KEY (addressId) REFERENCES address (addressId),
-	FOREIGN KEY (user_id) REFERENCES users (user_id)
-);
-CREATE TABLE address (
-	addressId INT(6) AUTO_INCREMENT PRIMARY KEY,
 	house_no INT(10),
 	street_name VARCHAR(255),
 	apartment_no VARCHAR(10),
@@ -30,7 +18,14 @@ CREATE TABLE address (
 	province VARCHAR(255),
 	zip_code VARCHAR(6),
 	country VARCHAR(255),
-	type VARCHAR(255)
+	type VARCHAR(255),
+	image VARCHAR(255),
+	description VARCHAR(255),
+	no_of_rooms INT,
+	no_of_bathrooms INT,
+	no_of_living_rooms INT,
+	price INT,
+	FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 CREATE TABLE conversation (
 	conversationId INT(6) AUTO_INCREMENT PRIMARY KEY,
@@ -51,3 +46,12 @@ CREATE TABLE conversation_reply (
 	conversationId INT(6),
 	FOREIGN KEY (conversationId) REFERENCES conversation (conversationId)
 );
+CREATE TABLE upload_data (
+  image_id int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id int(6) NOT NULL,
+  file_name varchar(200) NOT NULL,
+  file_size varchar(200) NOT NULL,
+  file_type varchar(200) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+--NEED A TABLE FOR LEASE AGREEMENT

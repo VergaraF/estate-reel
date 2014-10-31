@@ -1,8 +1,8 @@
 	<?php 
+		require('authentication.php');
 		require_once('connect.php');
-		include('oopClass.php');
+		include('loggedOn.php');
 		if(isset($_POST['upload'])){
-			$obj = new Myclass();
 			$house_no = $_POST['house_no'];
 			$street_name = $_POST['street_name'];
 			$apartment_no = $_POST['apartment_no'];
@@ -11,29 +11,31 @@
 			$zip =  $_POST['zip'];
 			$country =  $_POST['country'];
 			$type =  $_POST['range'];
-			// $imagePath = $_POST['image'];
-			// $desc = $_POST['description'];
-			// $rooms = $_POST['rooms'];
-			// $baths = $_POST['bathrooms'];
-			// $livingRooms = $_POST['living_rooms'];
-			// $price = $_POST['price'];
+			$imagePath = $_POST['image'];
+			$desc = $_POST['description'];
+			$rooms = $_POST['rooms'];
+			$baths = $_POST['bathrooms'];
+			$livingRooms = $_POST['living_rooms'];
+			$price = $_POST['price'];
 
-			//DO THIS ON THE CLIENT SIDE
-			// if(strcmp($country, "Canada") === 0 && strlen(str_replace(" ", "", $zip)) === 6){
-			// 	echo "<div>" . "the zip is ok" . "</div>";
-			// }
-			// else{
-			// 	echo "<div>" . "bla bla bla" . "</div>";
-			// }
 
-			$insertApartment = "INSERT INTO address VALUES (DEFAULT, '$house_no', '$street_name', '$apartment_no', 
-							'$city', '$province', '" . str_replace(" ", "", $_POST['zip']) . "', '$country', '$type')";
-			$obj->executeSqlQuery($insertApartment); 
+
+			//DO ALL THE ERROR CHECKING ON CLIENT SIDE
+			//	-verify zip code
+			//	-verify price (string or integer?)
+			//	-check apartment number (null or not null)
+			//	-etc
+
+			$user_id = $obj->getUserId();
+			$insert = "INSERT INTO apartment_house VALUES (DEFAULT, '$user_id', '$house_no', '$street_name', '$apartment_no', 
+			 				'$city', '$province', '" . str_replace(" ", "", $_POST['zip']) . "', '$country', '$type', '$imagePath',
+			 				'desc', '$rooms', '$baths', '$livingRooms', '$price')";
+			$obj->executeSqlQuery($insert);
 		}
-		include('header.php');
+		
 	?>
-	<a href="displayApartments.php">Display All Apartments</a>
-	<form name="productFome" method="POST" action="">
+	<h2>Upload Apartment/House</h2>
+	<form name="productFome" method="POST" action="" enctype="multipart/form-data">
 		<input name="house_no" type="text" id="house_no" placeholder="House Number"  /><br>
 		<input name="street_name" type="text" id="street_name" placeholder="Street Name"  /><br>
 		<select id="country" name ="country"></select>
@@ -56,5 +58,6 @@
 		<input name="price" type="text"  id="price" placeholder="Price" /><br>
 		<input name="upload" type="submit" id="upload" value="Upload" />
 	</form>
+</section>
 </body>
 </html>

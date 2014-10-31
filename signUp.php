@@ -1,9 +1,11 @@
 <?php 
 	session_start();
-	
-	//include('oopClass.php');
-	require_once('createDatabase.php');
+	//UNSETTING THE USERNAME BECAUSE HE IS NO MORE LOGGED IN
+	unset($_SESSION['USERNAME']);
+	require_once('connect.php');
+	include('oopClass.php');
 
+	//this if statement is executed when the user click on Create Account
 	if(isset($_POST["createAccount"])){
 		$obj = new Myclass();
 		$passwordLength = 8;
@@ -15,12 +17,16 @@
 		$confirmPass = $_POST["cPassword"];
 		$type = $_POST['range'];
 
+		//matching the passwords (IT SHOULD BE DONE ON CLIENT SIDE)
 		if($obj->checkLength($password, $passwordLength) === false){
 			$obj->printMessage("MESSAGE", "At least $passwordLength characters are required for the password!", "signUp.php");
 		}
 
+		//verifyUsername is used to check if the username is already taken or not
 		$verifyUsername = "SELECT * FROM users WHERE username = '$username'";
 		$res = $conn->query($verifyUsername);
+
+		//this if statement executes when the passwords are identical
 		if(strcmp($password, $confirmPass) === 0){
 			if(mysqli_num_rows($res) == 0){
 				$salt = hash('sha256', uniqid(mt_rand(), true) . $password . strtolower($username));

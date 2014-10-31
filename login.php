@@ -6,6 +6,7 @@
     <body>
 		<?php 
 			session_start();
+			unset($_SESSION['USERNAME']);
 			include('oopClass.php');
 			require_once('connect.php');
 			if(isset($_POST["login"])){
