@@ -1,13 +1,12 @@
-<html>
+	<html>
     <head>
-        <title>Estate R&eacuteel - Login</title>
+        <title>Estate R&eacuteel</title>
+        
         <link rel="stylesheet" type="text/css" href="CSS/userManagementLayout.css">
     </head>
-    <body>
 		<?php 
-			session_start();
+			include('header.php');
 			unset($_SESSION['USERNAME']);
-			include('oopClass.php');
 			require_once('connect.php');
 			if(isset($_POST["login"])){
 				$obj = new Myclass();
@@ -32,7 +31,6 @@
 			}
 		?>
 		<?php
-			include('header.php');
 			if(isset($_SESSION['MESSAGE'])) {
 				echo "<p>" . $_SESSION['MESSAGE'] . "</p>";
 				unset($_SESSION['MESSAGE']);

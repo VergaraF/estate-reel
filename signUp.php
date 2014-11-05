@@ -1,9 +1,14 @@
+<html>
+    <head>
+        <title>Estate R&eacuteel</title>
+        
+        <link rel="stylesheet" type="text/css" href="CSS/userManagementLayout.css">
+    </head>
 <?php 
 	session_start();
 	//UNSETTING THE USERNAME BECAUSE HE IS NO MORE LOGGED IN
 	unset($_SESSION['USERNAME']);
 	require_once('connect.php');
-	include('oopClass.php');
 
 	//this if statement is executed when the user click on Create Account
 	if(isset($_POST["createAccount"])){
