@@ -19,7 +19,6 @@ CREATE TABLE apartment_house (
 	zip_code VARCHAR(6),
 	country VARCHAR(255),
 	type VARCHAR(255),
-	image VARCHAR(255),
 	description VARCHAR(255),
 	no_of_rooms INT,
 	no_of_bathrooms INT,
@@ -46,12 +45,11 @@ CREATE TABLE conversation_reply (
 	conversationId INT(6),
 	FOREIGN KEY (conversationId) REFERENCES conversation (conversationId)
 );
-CREATE TABLE upload_data (
+CREATE TABLE apartment_images (
   image_id int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  user_id int(6) NOT NULL,
+  apartment_houseId int(6) NOT NULL,
   file_name varchar(200) NOT NULL,
   file_size varchar(200) NOT NULL,
   file_type varchar(200) NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users (user_id)
+  FOREIGN KEY (apartment_houseId) REFERENCES apartment_house (apartment_houseId)
 );
---NEED A TABLE FOR LEASE AGREEMENT

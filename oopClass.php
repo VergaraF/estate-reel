@@ -52,8 +52,21 @@
 		//this method is used to return a resultSet of a SELECT statement
 		public function getResultSetOf($query){
 			GLOBAL $conn;
-			$rs = mysqli_query($conn, $query);
+			$rs = mysqli_query($conn, $query) or die($conn->error);
 			return $rs;
 		}
+
+		//this method is used to get the extension of the image
+		function GetImageExtension($imagetype)
+	    {
+	       if(empty($imagetype)) return false;
+	       switch($imagetype)
+	       {
+	           case 'image/bmp': return '.bmp';
+	           case 'image/jpeg': return '.jpg';
+	           case 'image/png': return '.png';
+	           default: return false;
+	       }
+	    }
 	}
 ?>

@@ -1,3 +1,4 @@
+<!-- THIS IS A INCLUDE FILE THAT IS USED TO KEEP THE SAME HEADER FOR THE LOGGED IN USER (almost similar to index.php) -->
 <html>
     <head>
         <title>Estate R&eacuteel</title>

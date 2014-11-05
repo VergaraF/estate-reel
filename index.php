@@ -1,3 +1,6 @@
+<!-- THIS FILE IS OPENED WHEN THE USER LOGS INTO THE SITE!! THIS SHOULD DISPLAY ALL 
+     THE APARTMENTS/HOUSES ALSO (WITH A DIFFERENT HEADER THAN THE OTHER FILE WHICH IS anonymousUserLayout.php) 
+-->
 <html>
     <head>
         <title>Estate R&eacuteel</title>

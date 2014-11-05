@@ -1,3 +1,4 @@
+<!-- THIS FILE COULD BE REMOVED AND ITS CODES COULD BE PUT INSIDE A FUNCTION INTO THE CLASS FILE -->
 <?php
 $servername = "localhost";
 $username = "root";

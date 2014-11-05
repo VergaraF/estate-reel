@@ -1,3 +1,4 @@
+<!-- THIS FILE COULD BE DELETED BECAUSE ITS CODE APPEARS INSIDE displayApartment.php FILE -->
 <html>
 <head>
 	<title>Edit Form</title>
@@ -9,6 +10,8 @@
 		include('loggedOn.php');
 		//inner join table address and apartment using addressId
 		//store the result into variables and then display them in edit form
+		$something = $_POST['hiddenID'];
+		echo "hidden id: " . $something;
 		
 	?>
 
