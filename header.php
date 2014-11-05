@@ -29,7 +29,8 @@
             <button type="button" onClick="window.location.href='login.php'" >Login</button>
             <button type="button" onClick="window.location.href='signUp.php'">Sign Up</button>
         </aside>
-        <section id="content">
+        
         <?php 
             } 
             ?>
+        <section id="content">

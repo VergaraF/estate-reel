@@ -1,9 +1,16 @@
 <!--THIS IS THE MAIN FILE!! IT DOES DELETE, EDIT, AND DISPLAY SPECIFIC APARTMENTS FOR A SPECIFIC USER -->
+<html>
+    <head>
+        <title>Estate R&eacuteel</title>
+         <link rel="stylesheet" type="text/css" href="CSS/mainLayout.css">
+        <link rel="stylesheet" type="text/css" href="CSS/userManagementLayout.css">
+    </head>
+
 <?php 
 	//including and requiring files
-	require('authentication.php');
+	//require('authentication.php');
 	require_once('connect.php');
-	include('loggedOn.php');
+	include('header.php');
 
 	//this if and else statements are executed when the user clicks delete or edit 
 	//DON NOT FORGET TO DELETE IMAGES FROM THE FOLDER

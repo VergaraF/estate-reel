@@ -64,7 +64,7 @@ h2{
 #content {
     position: absolute;
     width: 50%;
-    height: 60% auto;
+    height: auto;
     top: 176px;
     background-color: white;
     margin-left: 25%;
