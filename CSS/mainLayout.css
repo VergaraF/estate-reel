@@ -78,8 +78,7 @@ h2{
     color: white;
 }
 
-#content {
-    overflow: hidden; 
+#content { 
     clear: both;
     position: absolute;
     width: 80%;

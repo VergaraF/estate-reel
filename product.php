@@ -1,70 +1,15 @@
-<!-- THIS FILE IS USED FOR UPLOADING APARTMENTS/HOUSES -->	
+<html>
+    <head>
+        <title>Estate R&eacuteel</title>
+        <link rel="stylesheet" type="text/css" href="CSS/mainLayout.css">
+        <link rel="stylesheet" type="text/css" href="CSS/userManagementLayout.css">
+        <script type= "text/javascript" src = "JS/countries.js"></script>
+    </head>	
 	<?php 
-		require('authentication.php');
-		require_once('connect.php');
-		include('loggedOn.php');
+		include('header.php');
 		if(isset($_POST['upload']) && isset($_FILES['files'])){
-		    $errors= array();
-		    
-		    $house_no = $_POST['house_no'];
-			$street_name = $_POST['street_name'];
-			$apartment_no = $_POST['apartment_no'];
-			$city = $_POST['city'];
-			$province =  $_POST['state'];
-			$zip =  $_POST['zip'];
-			$country =  $_POST['country'];
-			$type =  $_POST['range'];
-			$desc = $_POST['description'];
-			$rooms = $_POST['rooms'];
-			$baths = $_POST['bathrooms'];
-			$livingRooms = $_POST['living_rooms'];
-			$price = $_POST['price'];
-
-
-			$user_id = $obj->getUserId();
-			$insert = "INSERT INTO apartment_house VALUES (DEFAULT, '$user_id', '$house_no', '$street_name', '$apartment_no', 
-			 				'$city', '$province', '" . str_replace(" ", "", $_POST['zip']) . "', '$country', '$type',
-			 				'$desc', '$rooms', '$baths', '$livingRooms', '$price')";
-			$obj->executeSqlQuery($insert);
-			$apartment_houseId = mysqli_insert_id($conn);
-		    //foreach loop is used to get al the selected files and modify their name and store it into the database
-			foreach($_FILES['files']['tmp_name'] as $key => $tmp_name ){
-				$file_size =$_FILES['files']['size'][$key];
-				$file_tmp =$_FILES['files']['tmp_name'][$key];
-				$file_type=$_FILES['files']['type'][$key];
-				$randNum = mt_rand();
-				$ext= $obj->GetImageExtension($file_type);
-				$imagename = date("d-m-Y")."-".$randNum."-".time().$ext;
-		        
-		        //to check the size of a file
-		        if($file_size > 2097152){
-					$errors[] = 'File size must be less than 2 MB';
-		        }
-		        $query = "INSERT into apartment_images VALUES(DEFAULT, '$apartment_houseId', '$imagename','$file_size','$file_type'); ";
-		  
-		        //this if statement executes when everything went fine
-		        if(empty($errors)==true){
-		        	$desired_dir = "apartment_images";
-		        	//this if statement is to create a directory for the images if it is not there
-					if(is_dir($desired_dir)==false){
-		                mkdir("$desired_dir", 0700);
-		            }
-		            move_uploaded_file($file_tmp,"$desired_dir/" . $imagename);
-					$obj->executeSqlQuery($query);
-		        }else{
-		            print_r($errors);
-		        }
-		    }
-
-			//DO ALL THE ERROR CHECKING ON CLIENT SIDE
-			//	-verify zip code
-			//	-verify price (string or integer?)
-			//	-check apartment number (null or not null)
-			//	-etc
-
-			
+			$productObj->insertOrUpdateProduct($_POST);
 		}
-		
 	?>
 	<h2>Upload Apartment/House</h2>
 	<form name="productFome" method="POST" action="" enctype="multipart/form-data">

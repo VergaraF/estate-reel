@@ -1,40 +1,36 @@
 	<html>
     <head>
         <title>Estate R&eacuteel</title>
-        
         <link rel="stylesheet" type="text/css" href="CSS/userManagementLayout.css">
     </head>
-		<?php 
+		<?php
 			include('header.php');
 			unset($_SESSION['USERNAME']);
-			require_once('connect.php');
 			if(isset($_POST["login"])){
-				$obj = new Myclass();
-				$username = $_POST["username"];
-				$password = $_POST["password"];
+				$databaseObj->createConnection();
+				$username = $databaseObj->getEscaped($_POST["username"]);
+				$password = $databaseObj->getEscaped($_POST["password"]);
 
-				$selectInfo = "SELECT * FROM users WHERE username = '$username'";
-				$result = mysqli_query($conn, $selectInfo);
-				if(mysqli_num_rows($result) > 0){
-					$row = mysqli_fetch_array($result);
-					$dbUsername = $row['username'];
-				   	$dbPassword = $row['password'];
-				   	$salt = $row['salt'];
-				   	if(strcmp($username, $dbUsername) === 0 && strcmp($dbPassword, crypt($password, $salt)) === 0){
-						$obj->printMessage("USERNAME", $username, "index.php");
-					}else{
-						$obj->printMessage("MESSAGE" ,"The username or password is wrong! Please try again", "login.php");
+				$getInfo = $databaseObj->getResultSetAsArray("SELECT * FROM users WHERE username = '$username'");
+				if(count($getInfo) > 0){
+					for($row = 0; $row < count($getInfo); $row++){
+						$db_username = stripslashes($getInfo[$row]['username']);
+						$db_password = stripslashes($getInfo[$row]['password']);
+						$db_salt = stripslashes($getInfo[$row]['salt']);
+
+						if(strcmp($username, $db_username) === 0 && strcmp($db_password, $loginObj->hashPassword($password, $db_salt)) === 0){
+							$databaseObj->printMessage("USERNAME", $username, "index.php");
+						}else{
+							$databaseObj->printMessage("MESSAGE" ,"The username or password is wrong! Please try again", "login.php");
+						}
 					}
 				}else{
-					$obj->printMessage("MESSAGE", "The username does not exist in the database! Do you really have an account?", "login.php");
+					$databaseObj->printMessage("MESSAGE", "The username does not exist in the database! Do you really have an account?", "login.php");
 				}
 			}
 		?>
 		<?php
-			if(isset($_SESSION['MESSAGE'])) {
-				echo "<p>" . $_SESSION['MESSAGE'] . "</p>";
-				unset($_SESSION['MESSAGE']);
-			}	
+			$loginObj->displayMessage();
 		?>
         <form name ="singUp" method="POST" action="">
            <input type="text"     name="username" id="usn" placeholder="Username"/>
@@ -42,10 +38,8 @@
            <label id="error">Error : Invalid username or password!</label>
            <input name="login" type="submit" value="Login" id="login"/>
         </form>
-    
     </section>
 	    <p>Remember you need an account to have full access to our site.</p>
 		<footer id ="footer"><p> Estate R&eacuteel - Ajmer Singh & Fabian Vergara</p></footer>
 </body>
-
 </html>

@@ -1,59 +1,47 @@
 <html>
     <head>
         <title>Estate R&eacuteel</title>
-        
         <link rel="stylesheet" type="text/css" href="CSS/userManagementLayout.css">
     </head>
 <?php 
-	session_start();
-	//UNSETTING THE USERNAME BECAUSE HE IS NO MORE LOGGED IN
-	unset($_SESSION['USERNAME']);
-	require_once('connect.php');
-
+	include('header.php');
+	$databaseObj->createConnection();
 	//this if statement is executed when the user click on Create Account
 	if(isset($_POST["createAccount"])){
-		$obj = new Myclass();
 		$passwordLength = 8;
-		$firstName = $_POST["firstName"];
-		$lastName = $_POST["lastName"];
-		$email = $_POST["email"];
-		$username = $_POST["username"];
-		$password = $_POST["password"];
+		$firstName 	 = $_POST["firstName"];
+		$lastName 	 = $_POST["lastName"];
+		$email 		 = $_POST["email"];
+		$username 	 = $_POST["username"];
+		$password 	 = $_POST["password"];
 		$confirmPass = $_POST["cPassword"];
-		$type = $_POST['range'];
+		$type 		 = $_POST['range'];
 
 		//matching the passwords (IT SHOULD BE DONE ON CLIENT SIDE)
-		if($obj->checkLength($password, $passwordLength) === false){
-			$obj->printMessage("MESSAGE", "At least $passwordLength characters are required for the password!", "signUp.php");
+		if($loginObj->checkLength($password, $passwordLength) === false){
+			$databaseObj->printMessage("MESSAGE", "At least $passwordLength characters are required for the password!", "signUp.php");
 		}
-
-		//verifyUsername is used to check if the username is already taken or not
-		$verifyUsername = "SELECT * FROM users WHERE username = '$username'";
-		$res = $conn->query($verifyUsername);
+		$res = $databaseObj->getResultSetAsArray("SELECT * FROM users WHERE username = '$username'");
 
 		//this if statement executes when the passwords are identical
 		if(strcmp($password, $confirmPass) === 0){
-			if(mysqli_num_rows($res) == 0){
-				$salt = hash('sha256', uniqid(mt_rand(), true) . $password . strtolower($username));
-				$pass = crypt($password, $salt);
+			if(count($res) == 0){
+				$salt = $loginObj->generateSalt($password, $username);
+				$pass = $loginObj->hashPassword($password, $salt);
 				$newUser = "INSERT INTO users VALUES (DEFAULT, '$firstName', '$lastName', 
 									'$email', '$username', '$pass', '$salt', '$type')";
-				$obj->insertUser($newUser);
-				$conn->close();
+				$loginObj->insertUser($newUser);
+				$databaseObj->closeConnection();
 			}else{
-				$obj->printMessage("MESSAGE", "The username is already taken! please take another one", "signUp.php");
+				$databaseObj->printMessage("MESSAGE", "The username is already taken! please take another one", "signUp.php");
 			}
 		}else{
-			$obj->printMessage("MESSAGE", "The password confirmation failed! Please try again", "signUp.php");
+			$databaseObj->printMessage("MESSAGE", "The password confirmation failed! Please try again", "signUp.php");
 		}
 	}
 ?>
 <?php
-	include('header.php');
-	if(isset($_SESSION['MESSAGE'])) {
-		echo $_SESSION['MESSAGE'];
-		unset($_SESSION['MESSAGE']);
-	}
+	$loginObj->displayMessage();
 ?>
 	<form name="signUp" method="POST" action="">
 		<input name="firstName" type="text" id="firstN" placeholder="First Name" required/><br>
@@ -68,7 +56,6 @@
 		<input name="range" type="radio" value="Landlord">Landlord</input><br>
 	<input name="createAccount" type="submit" id="createAcc" value="Create Account"/>
 	</form><address>Author: Ajmer Singh Gadreh AND Fabian Vergara</address>
-	</section>
-	
+	</section>	
 </body>
 </html>

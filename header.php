@@ -4,17 +4,21 @@
         </header>
 
         <?php
-            include('oopClass.php');
-            $obj = new Myclass();
+            include('classes/databaseClass.php');
+            include('classes/loginClass.php');
+            include('classes/productClass.php');
+            $databaseObj = new Database();
+            $loginObj = new Login();
+            $productObj = new Product();
             session_start();
-            $rs = $obj->getResultSetOf("SELECT * FROM apartment_house INNER JOIN apartment_images 
+            $rsForIndex = $databaseObj->getResultSetAsArray("SELECT * FROM apartment_house INNER JOIN apartment_images 
                                 ON apartment_house.apartment_houseId = apartment_images.apartment_houseId
                                 GROUP BY apartment_house.apartment_houseId");
             if(isset($_SESSION['USERNAME'])){
         ?>
         <aside id="loggedMenu" >
             <button type="button" onClick="window.location.href='index.php'">Home</button>
-            <button type="button">Profile</button>
+            <button type="button" onClick="window.location.href='userProfile.php'">Profile</button>
             <button type="button">Messages</button>
             <button type="button" onClick="window.location.href='product.php'" >Upload</button>
             <button type="button" onClick="window.location.href='displayApartments.php'">View</button>
