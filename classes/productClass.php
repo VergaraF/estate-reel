@@ -78,8 +78,24 @@
 			}
 		}
 
-		public function displayProduct($query){
+		public function displaySpecificProduct($apartment_houseId){
+			$query = "SELECT * FROM apartment_house WHERE apartment_houseId = $apartment_houseId";
 			return parent::getResultSetAsArray($query);
+		}
+
+		public function displayOwnerProducts($userId){
+			$query = "SELECT * FROM apartment_house INNER JOIN apartment_images 
+								 ON apartment_house.apartment_houseId = apartment_images.apartment_houseId
+							  WHERE apartment_house.user_id = $userId
+						   GROUP BY apartment_house.apartment_houseId";
+			return parent::getResultSetAsArray($query);
+		}
+
+		public function displayAllProducts(){
+			$query = "SELECT * FROM apartment_house INNER JOIN apartment_images 
+                                 ON apartment_house.apartment_houseId = apartment_images.apartment_houseId
+                           GROUP BY apartment_house.apartment_houseId";
+            return parent::getResultSetAsArray($query);
 		}
 
 		public function showDetailsOfProduct($id){

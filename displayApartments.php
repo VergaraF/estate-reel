@@ -2,16 +2,16 @@
     <head>
         <title>Estate R&eacuteel</title>
          <link rel="stylesheet" type="text/css" href="CSS/mainLayout.css">
-        <link rel="stylesheet" type="text/css" href="CSS/userManagementLayout.css">
+       
     </head>
 <?php
-	include('header.php');
+	include('PreCode/header.php');
 	$databaseObj->createConnection();
 
 	if(isset($_POST['delete'])){
 		$productObj->deleteProduct($_POST['hiddenID']);
 	}elseif(isset($_POST['edit'])){
-		$allResult = $productObj->displayProduct("SELECT * FROM apartment_house WHERE apartment_houseId = '" . $_POST['hiddenID'] . "'");
+		$allResult = $productObj->displaySpecificProduct($_POST['hiddenID']);
 ?>
 		<form name="editForm" method="POST" action="">
 		<h2>Edit Form</h2>
@@ -46,10 +46,7 @@
 		$productObj->insertOrUpdateProduct($_POST);
 	}
 	$userId = $loginObj->getUserId();
-	$rs = $productObj->displayProduct("SELECT * FROM apartment_house INNER JOIN apartment_images 
-								ON apartment_house.apartment_houseId = apartment_images.apartment_houseId
-								WHERE apartment_house.user_id = $userId
-								GROUP BY apartment_house.apartment_houseId");
+	$rs = $productObj->displayOwnerProducts($userId);
 ?>
 	<h2>List of Apartments/Houses</h2>
 	<table border="1" align="center">
@@ -88,5 +85,6 @@
 			?>
 		</tbody>
 	</table>
+
 </body>
 </html>

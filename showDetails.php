@@ -2,10 +2,9 @@
     <head>
         <title>Estate R&eacuteel</title>
         <link rel="stylesheet" type="text/css" href="CSS/mainLayout.css">
-        <link rel="stylesheet" type="text/css" href="CSS/userManagementLayout.css">
         <link rel="stylesheet" type="text/css" href="CSS/styles.css">
     </head>
-<?php include('header.php'); ?>
+<?php include('PreCode/header.php'); ?>
 	<div id="col1">
 		<div id="gallery">
 			<?php
@@ -63,5 +62,6 @@
 		console.log(document.getElementById(newID));
 	}
 </script>
+
 </body>
 </html>

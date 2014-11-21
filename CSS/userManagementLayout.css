@@ -79,7 +79,20 @@ form{
     height: 100%;
 }
 
-#usn, #pwd, #firstN, #lastN, #email, 
+#firstN, #lastN {
+    background-color: #D4D4BF;
+    border: none;
+    height: 40px;
+    width: 47.5%;
+    font-size: 15pt;
+    margin-top: 10px;
+    padding-left: 15px;  
+}
+#firstN{
+    margin-left: 0px;
+}
+
+#usn, #pwd, #email, #pnum,
 #cpwd, #house_no, #street_name, #apart_no, 
 #city, #province, #zip, #country, #state, #image, #desc,
 #rooms, #bath, #livingRooms, #price {
@@ -102,7 +115,7 @@ form{
     color: white;
 }
 
-#login{
+#login, #createAcc{
     margin-bottom: 50px;
 }
 
@@ -116,6 +129,6 @@ footer {
     width: 80%;
     margin-left: 10%;
     margin-right: 10%;
-    bottom: 0;
-    left: 0;
+    margin-top: 800px;
+
 }

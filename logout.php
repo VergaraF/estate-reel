@@ -7,11 +7,12 @@
 	session_start();
 	session_unset();
 	session_destroy();
-	include('header.php');
+	include('PreCode/header.php');
     ?>
 
     <section id="content">
     	<p>You have been successfully logout. Have a good day!.</p>
     </section>
+
     </body>
 </html>

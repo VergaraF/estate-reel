@@ -23,7 +23,7 @@
 		}
 
 		public function getEscaped($text){
-			return $this->connection->real_escape_string($text);
+			return $this->createConnection()->real_escape_string($text);
 		}
 
 		public function getLastId(){
