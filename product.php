@@ -2,8 +2,9 @@
     <head>
         <title>Estate R&eacuteel</title>
         <link rel="stylesheet" type="text/css" href="CSS/mainLayout.css">
-     
         <script type= "text/javascript" src = "JS/countries.js"></script>
+        <script type= "text/javascript" src = "JS/validations.js"></script>
+
     </head>	
 	<?php 
 		include('PreCode/header.php');
@@ -22,7 +23,7 @@
 		 </script>
 		<input name="apartment_no" type="text" id="apart_no" placeholder="Apartment Number (Optional)" /><br>
 		<input name="city" type="text"  id="city" placeholder="City" required /><br>
-		<input name="zip" type="text" id="zip" placeholder="Postal Code (H1H 1H1)" required /><br>
+		<input name="zip" type="text" id="zip" placeholder="Postal Code (H1H 1H1)" onchange="validateZipCode(document.getElementById('country'), this)" required /><br>
 		<label>Type: </label>
 		<input name="range" type="radio" value="House" required>House</input>
 		<input name="range" type="radio" value="Apartment">Apartment</input>

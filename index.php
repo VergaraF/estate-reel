@@ -11,6 +11,7 @@
     <script type="text/javascript" src="JS/jssor.js"></script>
     <script type="text/javascript" src="JS/jssor.slider.js"></script>
     <script>
+    
         jQuery(document).ready(function ($) {
             var options = {
                 $AutoPlay: true,                                    //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
@@ -21,7 +22,7 @@
                 $ArrowKeyNavigation: true,                          //[Optional] Allows keyboard (arrow key) navigation or not, default value is false
                 $SlideDuration: 500,                                //[Optional] Specifies default duration (swipe) for slide in milliseconds, default value is 500
                 $MinDragOffsetToSlide: 20,                          //[Optional] Minimum drag offset to trigger slide , default value is 20
-                $SlideWidth: 1010,                                 //[Optional] Width of every slide in pixels, default value is width of 'slides' container
+                $SlideWidth: 700,                                 //[Optional] Width of every slide in pixels, default value is width of 'slides' container
                 $SlideHeight: 300,                                //[Optional] Height of every slide in pixels, default value is height of 'slides' container
                 $SlideSpacing: 0,                                   //[Optional] Space between each slide in pixels, default value is 0
                 $DisplayPieces: 1,                                  //[Optional] Number of pieces to display (the slideshow would be disabled if the value is set to greater than 1), the default value is 1
@@ -56,18 +57,33 @@
                 }
             };
 
-            var jssor_slider2 = new $JssorSlider$("slider2_container", options);
-            //responsive code begin
-            //you can remove responsive code if you don't want the slider scales while window resizes
-            function ScaleSlider() {
-                var parentWidth = jssor_slider2.$Elmt.parentNode.clientWidth;
-                if (parentWidth)
-                    jssor_slider2.$ScaleWidth(Math.min(parentWidth, 800));
-                else
-                    window.setTimeout(ScaleSlider, 30);
-            }
+            // var jssor_slider2 = new $JssorSlider$("slider2_container", options);
+            // //responsive code begin
+            // //you can remove responsive code if you don't want the slider scales while window resizes
+            // function ScaleSlider() {
+            //     var parentWidth = jssor_slider2.$Elmt.parentNode.clientWidth;
+            //     if (parentWidth)
+            //         jssor_slider2.$ScaleWidth(Math.min(parentWidth, 800));
+            //     else
+            //         window.setTimeout(ScaleSlider, 30);
+            // }
 
-            ScaleSlider();
+            // ScaleSlider();
+            var jssor_slider2 = new $JssorSlider$("slider2_container", options);
+
+//responsive code begin
+//you can remove responsive code if you don't want the slider scales while window resizes
+function ScaleSlider() {
+    var width = document.getElementById('content').offsetWidth;
+    console.log("TEST : " + width);
+    if (width)
+        jssor_slider2.$SetScaleWidth(width);
+    else
+        $JssorUtils$.$Delay(ScaleSlider, 30);
+}
+
+ScaleSlider();
+$JssorUtils$.$AddEvent(window, "load", ScaleSlider);
 
             if (!navigator.userAgent.match(/(iPhone|iPod|iPad|BlackBerry|IEMobile)/)) {
                 $(window).bind('resize', ScaleSlider);
@@ -86,14 +102,14 @@
         height: 300px; overflow: hidden;">
 
         <!-- Loading Screen -->
- <!--        <div u="loading" style="position: absolute; top: 0px; left: 0px;">
+         <div u="loading" style="position: absolute; top: 0px; left: 0px;">
             <div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;
                 background-color: #000; top: 0px; left: 0px;width: 100%;height:100%;">
             </div>
             <div style="position: absolute; display: block; background: url(img/loading.gif) no-repeat center center;
                 top: 0px; left: 0px;width: 100%;height:100%;">
             </div>
-        </div> -->
+        </div> 
        <!-- Slides Container -->
         <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 1px; right: 0px; width: 100%; height: 300px;
             overflow: hidden;">

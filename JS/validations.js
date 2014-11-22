@@ -62,25 +62,44 @@ function comparePasswords(pass1, pass2){
 
 
 //======================UPLOADING APARTMENTS VALIDATIONS=========================//
-function countryselect(ucountry)
-{
-	if(ucountry.value == "Default"){
+function selectCountry(country){
+	console.log("asd");
+	if(country.value.valueOf() === "-1"){
 		alert('Select your country from the list');
-		ucountry.focus();
+		country.focus();
 		return false;
 	}else{
 		return true;
 	}
 }
 
-function allnumeric(uzip)  
-{   
-	var numbers = /^[0-9]+$/;  
-	if(uzip.value.match(numbers))  {  
-		return true;  
+function validatePrice(){
+	
+}
+
+function validateZipCode(country, zip_code){   
+	var zipCanada = /[A-z]\d{1}[A-z][- ]?\d{1}[A-z]\d{1}\b/;
+	var zipUSA = /\b\d{5}[-]?\d{4}\b/;
+	console.log("value of country is " + country.value);
+	if(country.value.valueOf() === "Canada"){
+		if(zip_code.value.match(zipCanada))  {  
+			return true;  
+		}else {  
+			alert('ZIP code format is invalid! Please try again!');  
+			zip_code.focus();
+			return false;
+		}
+	}else if(country.value.valueOf() === "USA"){
+		if(zip_code.value.match(zipUSA))  {  
+			return true;  
+		}else {  
+			alert('ZIP code format is invalid! Please try again!');  
+			zip_code.focus();  
+			return false;  
+		}
 	}else {  
-		alert('ZIP code must have numeric characters only');  
-		uzip.focus();  
+		alert('Please select the country first and try again!');  
+		country.focus();  
 		return false;  
 	}  
 }
