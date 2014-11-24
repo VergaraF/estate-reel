@@ -99,5 +99,33 @@ footer {
     left: 0;
 }
 
+#apt{
+    height: auto;
+    margin-top: 10px;
+  
+    border-right: 2px solid #C00;
+    border-bottom: 1px solid #C00;
+    width: 99%;
+    text-align: justify;
+
+}
 
 
+#placeImg{
+    height: 150px;
+}
+
+#col2{
+    width: 80%;
+}
+
+#price{
+    margin-top: 50px;
+    height: 10px;
+}
+
+#number{
+    font-weight: bold;
+    font-size: 20pt;
+    color: #424250;
+}
