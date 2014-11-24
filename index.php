@@ -208,33 +208,27 @@ $JssorUtils$.$AddEvent(window, "load", ScaleSlider);
         <!-- Trigger -->
     </div>
     <!-- Jssor Slider End -->
-
-   
-            <?php
-                if (count($rsForIndex) > 0) {
-                    for($row = 0; $row < count($rsForIndex); $row++){
-                        echo "
-                        <table border=1>
-  <tr>
-    <th rowspan='3'><img style='width:100px;height:100px;' src='apartment_images/" . $rsForIndex[$row]['file_name'] . "'/></th>
-    <th rowspan='3'>" . $rsForIndex[$row]['description'] . "</th>
-    <th></th>
-  </tr>
-  <tr>
-    <td>" . $rsForIndex[$row]['price'] . "$</td>
-  </tr>
-  <tr>
-    <td></td>
-  </tr>
-</table>";
-
-
-          
-                    }
-                }
-            ?>
-        
+    <?php
+        $rsForIndex = $productObj->displayAllProducts();
+        if (count($rsForIndex) > 0) {
+            for($row = 0; $row < count($rsForIndex); $row++){
+                echo "
+                <table border=1>
+                  <tr>
+                    <th rowspan='3'><img style='width:100px;height:100px;' src='apartment_images/" . $rsForIndex[$row]['file_name'] . "'/></th>
+                    <th rowspan='3'>" . $rsForIndex[$row]['description'] . "</th>
+                    <th></th>
+                  </tr>
+                  <tr>
+                    <td>" . $rsForIndex[$row]['price'] . "$</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                  </tr>
+                </table>";
+            }
+        }
+    ?>   
     </section>
-
     </body>
 </html>

@@ -53,6 +53,15 @@
 			}
 		}
 
+		public function getRangeType($username){
+			$rangeTypeArray = $this->getSpecificUser($username);
+			$type = "";
+			for ($row=0; $row < count($rangeTypeArray); $row++) { 
+				$type = $rangeTypeArray[$row]['rangeType'];
+			}
+			return $type;
+		}
+
 		public function getSpecificUser($username){
 			return parent::getResultSetAsArray("SELECT * FROM users WHERE username = '$username'");
 		}
@@ -93,9 +102,10 @@
 			$last_name  = $post['lastname'];
 			$email 		= $post['email'];
 			$username 	= $post['username'];
-			//$type 		= $post['range'];
-			$update = "UPDATE users SET firstname = '$first_name', lastname = '$last_name',
-										email 	  = '$email', 	   username = '$username'
+			$phone 		= $post['phoneNum'];
+			$update = "UPDATE users SET firstname 	 = '$first_name', lastname = '$last_name',
+										email 	  	 = '$email', 	   username = '$username',
+										phoneNumber  = '$phone'
 									WHERE user_id = '$user_id'";
 			parent::executeSqlQuery($update);
 			$_SESSION['USERNAME'] = $username;
@@ -104,6 +114,9 @@
 		public function logout(){
 			unset($_SESSION['USERNAME']);
 			header("location: index.php");
+			session_start();
+			session_unset();
+			session_destroy();
 		}
 
 		public function displayMessage(){
@@ -146,22 +159,25 @@
 
 		public function deactivateAccount(){
 			$user_id = $this->getUserId();
-			$query1 = "SELECT conversationId FROM conversation WHERE user_one = '$user_id' OR user_two = '$user_id'";
-			$allConversations = parent::getResultSetAsArray($query1);
+			//get all the conversations of that user
+			$allTheConversations = Conversation::displayConversations($user_id);
 
-			for ($row = 0; $row < count($allConversations); $row++){
-				Conversation::deleteAllMessages($allConversations[$row]['conversationId']);
-				Conversation::deleteConversation($allConversations[$row]['conversationId']);
+			//delete all the conversations with all their messages
+			for ($row=0; $row < count($allTheConversations); $row++) { 
+				Conversation::deleteConversation($allTheConversations[$row]['conversationId']);
+			}
+			
+			//get all the apartments of this user in an array
+			$apartmentArray = Product::displayOwnerProducts($user_id);
+
+			//delete all the selected apartments
+			for ($row=0; $row < count($apartmentArray); $row++) { 
+				Product::deleteProduct($apartmentArray[$row]['dwelling_Id'], $user_id);
 			}
 
-			$query = "SELECT apartment_houseId FROM apartment_house WHERE user_id = $user_id";
-			$query = "SELECT file_name FROM apartment_images WHERE apartment_houseId = $id"; //select for all the apartment ids
-			$query1 = "DELETE FROM apartment_images WHERE apartment_houseId = $id"; //for all the apartments
-			$query2 = "DELETE FROM apartment_house WHERE apartment_houseId = $id"; //all the apartments
-			$query3 = "DELETE FROM conversation_reply WHERE user_id = $user_id"; // all the messages
-			$query4 = "DELETE FROM conversation WHERE user_one = $user_id OR user_two = $user_id";
-			$query5 = "DELETE FROM users WHERE username = $username";
-			// $query6 will be used to delete pictures from the folder
+			//delete the user from the database
+			parent::executeSqlQuery("DELETE FROM users WHERE user_id = '$user_id'");
+			parent::printMessage("MESSAGE", "Your account has been delete successfully!", "login.php");
 		}
 	}
 ?>

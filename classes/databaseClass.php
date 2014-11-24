@@ -40,12 +40,12 @@
 
 		//this method is used to return a resultSet of a SELECT statement
 		public function getResultSetOf($query){
-			$rs = mysqli_query(self::createConnection(), $query) or die($this->createConnection()->error);
+			$rs = mysqli_query($this->createConnection(), $query) or die($this->createConnection()->error);
 			return $rs;
 		}
 
 		public function getResultSetAsArray($query){
-			$rs = mysqli_query(self::createConnection(), $query) or die($this->connection->error);
+			$rs = mysqli_query($this->createConnection(), $query) or die($this->connection->error);
 			if($rs->num_rows > 0){
 				$index = 0;
 				while($row = $rs->fetch_assoc()){
@@ -75,6 +75,7 @@
 	           case 'image/bmp': return '.bmp';
 	           case 'image/jpeg': return '.jpg';
 	           case 'image/png': return '.png';
+	           case 'image/gif': return '.gif';
 	           default: return false;
 	       }
 	    }

@@ -20,12 +20,12 @@ CREATE TABLE bannedUsers (
 );
 CREATE TABLE address_info(
 	address_id INT(4) AUTO_INCREMENT PRIMARY KEY,
-	house_no INT(10),
+	house_no VARCHAR(15),
 	street_name VARCHAR(255),
 	apartment_no VARCHAR(10),
 	city VARCHAR(255),
 	province VARCHAR(255),
-	zip_code VARCHAR(6),
+	zip_code VARCHAR(10),
 	country VARCHAR(255)
 );
 CREATE TABLE dwellings (
@@ -33,11 +33,11 @@ CREATE TABLE dwellings (
 	address_id INT(4) NOT NULL,
 	user_id INT(6) NOT NULL, 
 	type VARCHAR(255),
-	description VARCHAR(255),
+	description VARCHAR(1000),
 	no_of_rooms INT,
 	no_of_bathrooms INT,
 	no_of_living_rooms INT,
-	price INT,
+	price VARCHAR(30),
 	rangeType VARCHAR(50),
 	FOREIGN KEY (user_id) REFERENCES users (user_id),
 	FOREIGN KEY (address_id) REFERENCES address_info (address_id)

@@ -15,6 +15,30 @@ function validateSignupForm(){
 	return false;
 }
 
+function validateProductForm(){
+	var country = document.productForm.country;
+	var state = document.productForm.state;
+	var zip = document.productForm.zip;
+	var price = document.productForm.price;
+	var type = document.productForm.range;
+	var apart_no = document.productForm.apartment_no;
+	if(type.value.valueOf() === "Apartment" && apart_no.value.valueOf() === ""){
+		alert("Please specify the apartment number");
+		apart_no.focus();
+		return false;
+	}
+	if(selectCountry(country)){
+		if(selectState(state)){
+			if(validateZipCode(country, zip)){
+				if(validatePrice(price)){
+					document.form('productForm').submit();
+				}
+			}
+		}
+	}
+	return false;
+}
+
 //==================SIGN UP VALIDATIONS================================//
 function validateUsername(inputtxt, len){
 	if (inputtxt.value.length >= len) {
@@ -63,7 +87,6 @@ function comparePasswords(pass1, pass2){
 
 //======================UPLOADING APARTMENTS VALIDATIONS=========================//
 function selectCountry(country){
-	console.log("asd");
 	if(country.value.valueOf() === "-1"){
 		alert('Select your country from the list');
 		country.focus();
@@ -73,14 +96,30 @@ function selectCountry(country){
 	}
 }
 
-function validatePrice(){
-	
+function selectState(state){
+	if (state.value.valueOf() === "Select State") {
+		alert('Select your state from the list');
+		state.focus();
+		return false;
+	}else{
+		return true;
+	}
+}
+
+function validatePrice(price){
+	if (!Number(price.value)) {
+		alert('Please put a valid price');
+		price.focus();
+		return false;
+	}else{
+		return true;
+	}
+
 }
 
 function validateZipCode(country, zip_code){   
 	var zipCanada = /[A-z]\d{1}[A-z][- ]?\d{1}[A-z]\d{1}\b/;
 	var zipUSA = /\b\d{5}[-]?\d{4}\b/;
-	console.log("value of country is " + country.value);
 	if(country.value.valueOf() === "Canada"){
 		if(zip_code.value.match(zipCanada))  {  
 			return true;  

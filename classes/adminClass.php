@@ -8,12 +8,17 @@
 			return parent::updateProfile();
 		}
 
+		public function modifyUser($user_id){
+			//this function will modify the status of a user (admin or regular)
+		}
+
 		public function deleteUser(){
 			return parent::deactivate();
 		}
 
-		public function banUser(){
-			
+		public function banUser($user_id, $message){
+			$query = "INSERT INTO bannedUsers VALUES(DEFAULT, '$user_id', '$message')"
+			Database::executeSqlQuery($query);
 		}
 
 		public function listAllProducts(){

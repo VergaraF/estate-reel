@@ -5,42 +5,47 @@
 			$house_no 		= $post['house_no'];
 			$street_name 	= parent::getEscaped($post['street_name']);
 			$apartment_no 	= parent::getEscaped($post['apartment_no']);
-			$city 			= parent::getEscaped($post['city']);
+			$city 			= parent::getEscaped(ucwords($post['city']));
 			$state 			= $post['state'];
 			$country 		= $post['country'];
-			$zip 			= $post['zip'];
+			$zip 			= strtoupper($post['zip']);
 			$type 			= $post['range'];
 			$description 	= parent::getEscaped($post['description']);
 			$room_no 		= $post['rooms'];
 			$bath_no 		= $post['bathrooms'];
 			$living_room_no = $post['living_rooms'];
-			$price 			= parent::getEscaped($post['price']);
+			$price 			= parent::getEscaped(number_format($post['price'], 2));
+			$rangeType		= $post['rangeType'];
 
 			$loginObj = new Login();
 			$user_id = $loginObj->getUserId();
 			if(isset($post['upload']) && isset($_FILES['files'])){
-				$query = "INSERT INTO apartment_house VALUES (DEFAULT, '$user_id', '$house_no', '$street_name', '$apartment_no', 
-			 				'$city', '$state', '" . str_replace(" ", "", $zip) . "', '$country', '$type',
-			 				'$description', '$room_no', '$bath_no', '$living_room_no', '$price')";
+				$query1 = "INSERT INTO address_info VALUES (DEFAULT, '$house_no', '$street_name', '$apartment_no', '$city', '$state', '$zip', '$country')";
+				parent::executeSqlQuery($query1);
+				$addressId = parent::getLastId();
+				$query = "INSERT INTO dwellings VALUES (DEFAULT, '$addressId', '$user_id', '$type', '$description', '$room_no', '$bath_no', '$living_room_no', '$price', '$rangeType')";
 				parent::executeSqlQuery($query);
 				$this->uploadImages($_FILES);
 			}elseif (isset($post['update'])) {
-				$apartment_houseId = $post['hiddenID'];
-				$updateQuery = "UPDATE apartment_house SET house_no 			= '$house_no', 		street_name  		= '$street_name',
-														   apartment_no 		= '$apartment_no', 	city 		 		= '$city',
-														   province 			= '$state', 		zip_code 	 		= '$zip',
-														   country 				= '$country', 		type 		 		= '$type',
-														   description 			= '$description', 	no_of_rooms	 		= '$room_no',
-														   no_of_bathrooms 		= '$bath_no', 		no_of_living_rooms 	= '$living_room_no',
-														   price 				= '$price'
-													   WHERE apartment_houseId 	= '$apartment_houseId'";
-				parent::executeSqlQuery($updateQuery);
+				$dwelling_Id = $post['hiddenID'];
+				$address_id = $this->getAddressId($dwelling_Id);
+				$updateDwellings = "UPDATE dwellings SET type 		 		= '$type',    		description 	= '$description',
+														 no_of_rooms 		= '$room_no', 		no_of_bathrooms	= '$bath_no', 		
+													     no_of_living_rooms = '$living_room_no',price 			= '$price'
+												   WHERE dwelling_Id = $dwelling_Id";
+				$updateAddress = "UPDATE address_info SET house_no 			= '$house_no', 		street_name  		= '$street_name',
+													    apartment_no 		= '$apartment_no', 	city 		 		= '$city',
+													    province 			= '$state', 		zip_code 	 		= '$zip',
+													    country				= '$country'
+											      WHERE address_id 	= '$address_id'";
+				parent::executeSqlQuery($updateDwellings);
+				parent::executeSqlQuery($updateAddress);
 			}
 		}
 
 		public function uploadImages($file){
 			$errors= array();
-			$apartment_houseId = parent::getLastId();
+			$dwelling_Id = parent::getLastId();
 			foreach($file['files']['tmp_name'] as $key => $tmp_name ){
 				$file_size =$file['files']['size'][$key];
 				$file_tmp =$file['files']['tmp_name'][$key];
@@ -59,60 +64,92 @@
 		                mkdir("$desired_dir", 0700);
 		            }
 		            move_uploaded_file($file_tmp,"$desired_dir/" . $imagename);
-					parent::executeSqlQuery("INSERT into apartment_images VALUES(DEFAULT, '$apartment_houseId', '$imagename','$file_size','$file_type')");
+					parent::executeSqlQuery("INSERT into apartment_images VALUES(DEFAULT, '$dwelling_Id', '$imagename','$file_size','$file_type')");
 		        }else{
 		            print_r($errors);
 		        }
 		    }
 		}
 
-		public function deleteProduct($id){
-			$query1 = "SELECT file_name FROM apartment_images WHERE apartment_houseId = $id";
-			$query2 = "DELETE FROM apartment_images WHERE apartment_houseId = $id";
-			$query3 = "DELETE FROM apartment_house WHERE apartment_houseId = $id";
-			$imageArray = parent::getResultSetAsArray($query1);
-			parent::executeSqlQuery($query2);
-			parent::executeSqlQuery($query3);
+		public function deleteProduct($id, $user_id){
+			//storing all the image names into an array so that later on we can delete those images from the folder
+			$imageArray = parent::getResultSetAsArray("SELECT file_name FROM apartment_images WHERE dwelling_Id = $id");
+			
+			//deleting apartment images from the database
+			parent::executeSqlQuery("DELETE FROM apartment_images WHERE dwelling_Id = $id");
+			
+			//storing address id into an array so that we can delete address of the apartment later on
+			$address_id = self::getAddressId($id);
+
+			//deleting apartment information such as description, price, etc
+			parent::executeSqlQuery("DELETE FROM dwellings WHERE dwelling_Id = $id");
+
+			//deleting the pictures from the folder
 			for($row = 0; $row < count($imageArray); $row++){
 				unlink("apartment_images/" . $imageArray[$row]['file_name'] . "");
 			}
+
+			//deleting the addresse of apartments
+			parent::executeSqlQuery("DELETE FROM address_info WHERE address_id = '$address_id'");
+			
 		}
 
-		public function displaySpecificProduct($apartment_houseId){
-			$query = "SELECT * FROM apartment_house WHERE apartment_houseId = $apartment_houseId";
-			return parent::getResultSetAsArray($query);
+		public function displaySpecificProduct($dwelling_Id){
+			return parent::getResultSetAsArray("SELECT * FROM dwellings INNER JOIN address_info
+														   ON dwellings.address_id = address_info.address_id
+														WHERE dwelling_Id = $dwelling_Id");
 		}
 
 		public function displayOwnerProducts($userId){
-			$query = "SELECT * FROM apartment_house INNER JOIN apartment_images 
-								 ON apartment_house.apartment_houseId = apartment_images.apartment_houseId
-							  WHERE apartment_house.user_id = $userId
-						   GROUP BY apartment_house.apartment_houseId";
+			$query = "SELECT * FROM dwellings INNER JOIN apartment_images 
+								 ON dwellings.dwelling_Id = apartment_images.dwelling_Id
+							  WHERE dwellings.user_id = $userId
+						   GROUP BY dwellings.dwelling_Id";
 			return parent::getResultSetAsArray($query);
 		}
 
 		public function displayAllProducts(){
-			$query = "SELECT * FROM apartment_house INNER JOIN apartment_images 
-                                 ON apartment_house.apartment_houseId = apartment_images.apartment_houseId
-                           GROUP BY apartment_house.apartment_houseId";
+			$query = "SELECT * FROM dwellings INNER JOIN apartment_images 
+                                 ON dwellings.dwelling_Id = apartment_images.dwelling_Id
+                           GROUP BY dwellings.dwelling_Id";
             return parent::getResultSetAsArray($query);
 		}
 
-		public function showDetailsOfProduct($id){
-			return parent::getResultSetAsArray("SELECT * FROM apartment_house WHERE apartment_houseId = '$id'");
-		}
+		// public function showDetailsOfProduct($id){
+		// 	return parent::getResultSetAsArray("SELECT * FROM dwellings INNER JOIN address_info 
+		// 												   ON dwellings.address_id = address_info.address_id
+		// 										WHERE dwellings.dwelling_Id = '$id'");
+		// }
 
 		public function getAllTheImages($id){
-			return parent::getResultSetAsArray("SELECT file_name FROM apartment_images WHERE apartment_houseId = '$id'");
+			return parent::getResultSetAsArray("SELECT file_name FROM apartment_images WHERE dwelling_Id = '$id'");
 		}
 
-		public function validateZip($zip){
-			$GOODZIPCANADA = "[A-z]\d{1}[A-z][- ]?\d{1}[A-z]\d{1}\b";
-			$GOODZIPUSA = "\b\d{5}[-]?\d{4}\b";
-			$phonenumber = "[(]?\d{3}[)-. ]?[ ]?\d{3}[-. ]?\d{4}\b";
+		public function getAddressId($dwelling_Id){
+			$infoArray = parent::getResultSetAsArray("SELECT address_id FROM dwellings WHERE dwelling_Id = '$dwelling_Id'");
+			for ($row=0; $row < count($infoArray); $row++) { 
+				$address_id = $infoArray[$row]['address_id'];
+			}
+			return $address_id;
 		}
 
-		public function validatePrice($price){
+		// for example 500-1000 or 1000-1500 etc
+		public function sortByPrice(){
+		
+		}
+
+		// for example for sale or for rent
+		public function sortByRange(){
+
+		}
+
+		// for example owner name
+		public function sortByOwner(){
+
+		}
+
+		// for example apartment or house
+		public function sortByType(){
 
 		}
 	}

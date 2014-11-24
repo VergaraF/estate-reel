@@ -23,7 +23,7 @@
 <div id="col2">
 <h2>Detailed Info</h2>
 <?php
-	$detailedInfo = $productObj->showDetailsOfProduct($_GET['hiddenID']);
+	$detailedInfo = $productObj->displaySpecificProduct($_GET['hiddenID']);
 	for ($row = 0; $row < count($detailedInfo); $row++){
 		echo "<p>Address: " . $detailedInfo[$row]['house_no'] . " "  . $detailedInfo[$row]['street_name'] . "<br>" 
 							. $detailedInfo[$row]['city'] 	  . ", " . $detailedInfo[$row]['province'] 	  . "<br>" 

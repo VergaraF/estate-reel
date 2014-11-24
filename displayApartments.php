@@ -7,9 +7,10 @@
 <?php
 	include('PreCode/header.php');
 	$databaseObj->createConnection();
+	$userId = $loginObj->getUserId();
 
 	if(isset($_POST['delete'])){
-		$productObj->deleteProduct($_POST['hiddenID']);
+		$productObj->deleteProduct($_POST['hiddenID'], $userId);
 	}elseif(isset($_POST['edit'])){
 		$allResult = $productObj->displaySpecificProduct($_POST['hiddenID']);
 ?>
@@ -28,12 +29,13 @@
 								 "<tr><td>Country</td>" 				. "<td><input name='country' type='text' value='" 		. $allResult[$row]['country'] 			."'></td></tr>" .
 								 "<tr><td>Zip</td>" 					. "<td><input name='zip' type='text' value='" 			. $allResult[$row]['zip_code'] 			."'></td></tr>" .
 								 "<tr><td>Type</td>" 					. "<td><input name='range' type='text' value='" 		. $allResult[$row]['type'] 				."'></td></tr>" .
-								 "<tr><td>Description</td>" 			. "<td><input name='description' type='text' value='" 	. $allResult[$row]['description'] 		."'></td></tr>" .
-								 "<tr><td>Number of Rooms</td>" 		. "<td><input name='rooms' type='text' value='" 		. $allResult[$row]['no_of_rooms'] 		."'></td></tr>" .
-								 "<tr><td>Number of Bathrooms</td>" 	. "<td><input name='bathrooms' type='text' value='" 	. $allResult[$row]['no_of_bathrooms'] 	."'></td></tr>" .
-								 "<tr><td>Number of Living romms</td>" 	. "<td><input name='living_rooms' type='text' value='"	. $allResult[$row]['no_of_living_rooms']."'></td></tr>" .
-								 "<tr><td>Price</td>" 					. "<td><input name='price' type='text' value='" 		. $allResult[$row]['price'] 			."'></td></tr>";
-						    echo "<input name='hiddenID' type='hidden' value='" . $allResult[$row]['apartment_houseId'] . "'/>
+								 "<tr><td>Description</td>" 			. "<td><textarea name='description' type='text' >"		. $allResult[$row]['description'] 		."</textarea></td></tr>" .
+								 "<tr><td>Number of Rooms</td>" 		. "<td><input name='rooms' type='number' max='10' min='0' value='" 			. $allResult[$row]['no_of_rooms'] 		."'></td></tr>" .
+								 "<tr><td>Number of Bathrooms</td>" 	. "<td><input name='bathrooms' type='number' max='10' min='0' value='" 		. $allResult[$row]['no_of_bathrooms'] 	."'></td></tr>" .
+								 "<tr><td>Number of Living Rooms</td>" 	. "<td><input name='living_rooms' type='number' max='10' min='0' value='"	. $allResult[$row]['no_of_living_rooms']."'></td></tr>" .
+								 "<tr><td>Price</td>" 					. "<td><input name='price' type='text' value='" 		. $allResult[$row]['price'] 			."'></td></tr>" .
+								 "<tr><td>For</td>" 					. "<td><input name='rangeType' type='text' value='" 	. $allResult[$row]['rangeType'] 		."'></td></tr>";
+						    echo "<input name='hiddenID' type='hidden' value='" . $allResult[$row]['dwelling_Id'] . "'/>
 	                             <td><input name='update' type='submit' value='Update' /></td>";
 						}
 					}
@@ -45,8 +47,12 @@
 	}elseif(isset($_POST['update'])){
 		$productObj->insertOrUpdateProduct($_POST);
 	}
-	$userId = $loginObj->getUserId();
-	$rs = $productObj->displayOwnerProducts($userId);
+	$type = $loginObj->getRangeType($_SESSION['USERNAME']);
+	if (strcmp($type, "Admin") === 0) {
+		$rs = $productObj->displayAllProducts();
+	}else{
+		$rs = $productObj->displayOwnerProducts($userId);
+	}
 ?>
 	<h2>List of Apartments/Houses</h2>
 	<table border="1" align="center">
@@ -66,7 +72,7 @@
 							 "<td>" . $rs[$row]['price'] . "</td>";
 			?>
 						<form name="deleteApart" method="POST" action="">
-							<input name="hiddenID" type="hidden" value="<?php echo $rs[$row]['apartment_houseId']; ?>" />
+							<input name="hiddenID" type="hidden" value="<?php echo $rs[$row]['dwelling_Id']; ?>" />
 							<td>
 								<input name='delete' type='submit' value='Delete' />
 								<input name='edit' type='submit' value='Edit' />
@@ -74,7 +80,7 @@
 						</form>
 						<form name="showApart" method="GET" action="showDetails.php">
 							<td>
-								<input name="hiddenID" type="hidden" value="<?php echo $rs[$row]['apartment_houseId']; ?>" />
+								<input name="hiddenID" type="hidden" value="<?php echo $rs[$row]['dwelling_Id']; ?>" />
 								<input name='showDetail' type='submit' value='Show Details' />
 							</td>
 						</form>
