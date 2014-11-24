@@ -15,12 +15,26 @@
             $conversationObj = new Conversation();
             $adminObj        = new Admin();
             session_start();
-            $range = $loginObj->getRangeType($_SESSION['USERNAME']);
-            $user_id = $loginObj->getUserId();
-            $bannedUser = $loginObj->checkBannedUsers($user_id);
-            if ($loginObj->isLoggedIn() && count($bannedUser) = 1) {
-                echo "you are banned for a while";
+            $range = null;
+            $user_id = null;
+            $bannedUser = null;
+          
+           
+            if (isset($_SESSION['USERNAME'])) {
+                $range = $loginObj->getRangeType($_SESSION['USERNAME']);
+                $user_id = $loginObj->getUserId();
+                $bannedUser = $loginObj->checkBannedUsers($user_id);
             }
+            
+           
+           if ($loginObj->isLoggedIn() && count($bannedUser) == 1) {
+              
+               ?>
+               <aside id="loggedMenu" >
+               <button type="button" onClick="window.location.href='logout.php'">Logout</button>
+                </aside>
+               <?php
+           }
             elseif($loginObj->isLoggedIn() && strcmp($range, "Regular") === 0){
         ?>
         <aside id="loggedMenu" >
@@ -36,11 +50,20 @@
         ?>
         <aside id="loggedMenu" >
             <button type="button" onClick="window.location.href='index.php'">Home</button>
+            <button type="button" onClick="window.location.href='userProfile.php'">Profile</button>
+            <button type="button" onClick="window.location.href='adminPanel.php'">Admin</button>
+            <button type="button" onClick="window.location.href='messenger.php'">Messages</button>
+            <button type="button" onClick="window.location.href='product.php'" >Upload</button>
+            <button type="button" onClick="window.location.href='displayApartments.php'">View</button>
+            <button type="button" onClick="window.location.href='logout.php'">Logout</button>
+        </aside>
+       <!--  <aside id="loggedMenu" >
+            <button type="button" onClick="window.location.href='index.php'">Home</button>
             <button type="button" onClick="window.location.href='userProfile.php'">Admin</button>
             <button type="button" onClick="window.location.href=''">Conversations</button>
             <button type="button" onClick="window.location.href='displayApartments.php'">Apartments</button>
             <button type="button" onClick="window.location.href='logout.php'">Logout</button>
-        </aside>
+        </aside> -->
         <?php
           } else{
         ?>

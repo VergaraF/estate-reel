@@ -4,7 +4,25 @@
         <link rel="stylesheet" type="text/css" href="CSS/mainLayout.css">
      
     </head>
-    <?php include('PreCode/header.php'); ?>
+    <?php include('PreCode/header.php'); 
+    if(count($bannedUser) == 1){
+        ?>
+        <p>You are not allowed to be here anymore. Your account has been banned because of the following description: </p>
+
+        <?php 
+           echo $bannedUser[0]['description'];
+        ?>
+            </section>
+    </body>
+</html>
+<?php
+    }else{
+
+
+
+
+
+    ?>
        <script type="text/javascript" src="JS/jquery-1.9.1.min.js"></script>
     <!-- use jssor.slider.mini.js (40KB) or jssor.sliderc.mini.js (32KB, with caption, no slideshow) or jssor.sliders.mini.js (28KB, no caption, no slideshow) instead for release -->
     <!-- jssor.slider.mini.js = jssor.sliderc.mini.js = jssor.sliders.mini.js = (jssor.js + jssor.slider.js) -->
@@ -236,3 +254,4 @@ $JssorUtils$.$AddEvent(window, "load", ScaleSlider);
     </section>
     </body>
 </html>
+<?php   } ?>
