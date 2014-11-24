@@ -83,6 +83,10 @@
 			return parent::getResultSetAsArray("SELECT * FROM users");
 		}
 
+		public function getUserById($user_id){
+			return parent::getResultSetAsArray("SELECT * FROM users WHERE user_id = '$user_id'");
+		}
+
 		public function getUserId(){
 			$selectUserId = "SELECT user_id FROM users WHERE username = '" . $_SESSION['USERNAME'] . "'";
 			$rs = mysqli_query(parent::createConnection(), $selectUserId);
@@ -120,6 +124,10 @@
 			session_start();
 			session_unset();
 			session_destroy();
+		}
+
+		public function checkBannedUsers($user_id){
+			return parent::getResultSetAsArray("SELECT * FROM bannedusers WHERE user_id = '$user_id'");
 		}
 
 		public function displayMessage(){
@@ -179,6 +187,7 @@
 			}
 
 			//delete the user from the database
+			parent::executeSqlQuery("DELETE FROM bannedusers WHERE user_id = '$user_id'");
 			parent::executeSqlQuery("DELETE FROM users WHERE user_id = '$user_id'");
 			parent::printMessage("MESSAGE", "Your account has been delete successfully!", "login.php");
 		}

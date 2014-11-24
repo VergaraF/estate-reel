@@ -8,13 +8,20 @@
             include('classes/loginClass.php');
             include('classes/productClass.php');
             include('classes/conversationClass.php');
+            include('classes/adminClass.php');
             $databaseObj     = new Database();
             $loginObj        = new Login();
             $productObj      = new Product();
             $conversationObj = new Conversation();
+            $adminObj        = new Admin();
             session_start();
             $range = $loginObj->getRangeType($_SESSION['USERNAME']);
-            if($loginObj->isLoggedIn() && strcmp($range, "Regular") === 0){
+            $user_id = $loginObj->getUserId();
+            $bannedUser = $loginObj->checkBannedUsers($user_id);
+            if ($loginObj->isLoggedIn() && count($bannedUser) = 1) {
+                echo "you are banned for a while";
+            }
+            elseif($loginObj->isLoggedIn() && strcmp($range, "Regular") === 0){
         ?>
         <aside id="loggedMenu" >
             <button type="button" onClick="window.location.href='index.php'">Home</button>
