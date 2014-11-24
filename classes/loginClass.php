@@ -7,11 +7,11 @@
 			$lastName 	 = parent::getEscaped($post['lastName']);
 			$email 		 = parent::getEscaped($post['email']);
 			$phoneNum	 = parent::getEscaped($post['phoneNum']);
-			$username 	 = parent::getEscaped($post['username']);
+			$username 	 = parent::getEscaped(strtolower($post['username']));
 			$password 	 = parent::getEscaped($post['password']);
 			$confirmPass = parent::getEscaped($post['cPassword']);
 			$type 		 = parent::getEscaped($post['range']);
-			$rangeType	 = 'Regular User';
+			$rangeType	 = 'Regular';
 
 			$res = $this->getSpecificUser($username);
 			//this if statement executes when the passwords are identical
@@ -32,9 +32,11 @@
 		}
 
 		public function processLoginForm($post){
-			$username = parent::getEscaped($post['username']);
+			$username = parent::getEscaped(strtolower($post['username']));
 			$password = parent::getEscaped($post['password']);
 
+		
+ 
 			$getInfo = parent::getResultSetAsArray("SELECT * FROM users WHERE username = '$username'");
 			if(count($getInfo) > 0){
 				for($row = 0; $row < count($getInfo); $row++){
@@ -51,6 +53,7 @@
 			}else{
 				parent::printMessage("MESSAGE", "The username does not exist in the database! Do you really have an account?", "login.php");
 			}
+
 		}
 
 		public function getRangeType($username){

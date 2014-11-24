@@ -14,7 +14,7 @@
             $conversationObj = new Conversation();
             session_start();
             $range = $loginObj->getRangeType($_SESSION['USERNAME']);
-            if($loginObj->isLoggedIn() && strcmp($range, "Regular User") === 0){
+            if($loginObj->isLoggedIn() && strcmp($range, "Regular") === 0){
         ?>
         <aside id="loggedMenu" >
             <button type="button" onClick="window.location.href='index.php'">Home</button>

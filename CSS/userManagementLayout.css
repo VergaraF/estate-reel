@@ -92,10 +92,7 @@ form{
     margin-left: 0px;
 }
 
-#usn, #pwd, #email, #pnum,
-#cpwd, #house_no, #street_name, #apart_no, 
-#city, #province, #zip, #country, #state, #image, #desc,
-#rooms, #bath, #livingRooms, #price {
+#usn, #pwd, #email, #pnum, #cpwd {
     background-color: #D4D4BF;
     width: 96%;
     border: none;
@@ -130,5 +127,10 @@ footer {
     margin-left: 10%;
     margin-right: 10%;
     margin-top: 800px;
-
+}
+label{
+    font-size: 14pt;
+    margin-left: 10px;
+    margin-right: 2px;
+    font-weight: bold;
 }

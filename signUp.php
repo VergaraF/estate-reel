@@ -19,9 +19,9 @@
 		<input name="username" type="text" id="usn" placeholder="Username" onchange="validateUsername(this, 5)" required/><br>
 		<input name="password" type="password" id="pwd" placeholder="Password" onchange="checkPassword(this)" required/><br>
 		<input name="cPassword" type="password" id="cpwd" placeholder="Confirm Password" 
-			   onchange="comparePasswords(document.getElementById('pwd'), this)" required/><br>
+			   onchange="comparePasswords(document.getElementById('pwd'), this)" required/><br></br>
 	<label>Type: </label>
-		<input name="range" type="radio" value="Owner" required>Owner</input>
+		
 		<input name="range" type="radio" value="Tenant">Tenant</input>
 		<input name="range" type="radio" value="Landlord">Landlord</input><br>
 		<input name="phoneNum" type="text" id="pnum" placeholder="Phone number (514 555 5555)" onchange="phoneNumber(this)" required/>
