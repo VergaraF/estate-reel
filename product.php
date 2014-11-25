@@ -8,6 +8,7 @@
     </head>	
 	<?php 
 		include('PreCode/header.php');
+		require('authentication.php');
 		if(isset($_POST['upload']) && isset($_FILES['files'])){
 			$productObj->insertOrUpdateProduct($_POST);
 		}

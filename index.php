@@ -6,23 +6,22 @@
     </head>
     <?php include('PreCode/header.php'); 
     if(count($bannedUser) == 1){
-        ?>
-        <p>You are not allowed to be here anymore. Your account has been banned because of the following description: </p>
-
-        <?php 
-           echo $bannedUser[0]['description'];
-        ?>
+        $days = $loginObj->dateDiff($bannedUser[0]['to_'], $bannedUser[0]['from_']);
+        echo "<p>You are not allowed to be here anymore. You may login after " . $bannedUser[0]['to_'] . ". Your account has been banned for $days days because of the following description: </p>";
+        echo $bannedUser[0]['description'];
+    ?>
             </section>
     </body>
 </html>
 <?php
     }else{
-
-
-
-
-
     ?>
+    <form name="filters" method="GET" action="">
+    <button type="button" onClick="window.location.href='index.php?sortBy=low'">Lowest To Highest</button>
+    <button type="button" onClick="window.location.href='index.php?sortBy=high'">Highest To Lowest</button>
+    <button type="button" onClick="window.location.href='index.php?sortBy=Sale'">For sales only</button>
+    <button type="button" onClick="window.location.href='index.php?sortBy=Rent'">For rent only</button>
+    </form>
        <script type="text/javascript" src="JS/jquery-1.9.1.min.js"></script>
     <!-- use jssor.slider.mini.js (40KB) or jssor.sliderc.mini.js (32KB, with caption, no slideshow) or jssor.sliders.mini.js (28KB, no caption, no slideshow) instead for release -->
     <!-- jssor.slider.mini.js = jssor.sliderc.mini.js = jssor.sliders.mini.js = (jssor.js + jssor.slider.js) -->
@@ -229,7 +228,14 @@ $JssorUtils$.$AddEvent(window, "load", ScaleSlider);
 
     <section id="apartments">
     <?php
-        $rsForIndex = $productObj->displayAllProducts();
+        $rsForIndex = null;
+        if (isset($_GET['sortBy'])) {
+            $value = $_GET['sortBy'];
+            $rsForIndex = $productObj->checkSortBy($value);
+        }else{
+            $rsForIndex = $productObj->displayAllProducts();
+        }
+        
         if (count($rsForIndex) > 0) {
             for($row = 0; $row < count($rsForIndex); $row++){
                 echo "

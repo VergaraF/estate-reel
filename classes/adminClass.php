@@ -34,8 +34,13 @@
 		}
 
 		public function banUser($user_id, $message){
-			$query = "INSERT INTO bannedUsers(banId, user_id, description, from_ ,to_) VALUES(DEFAULT, '$user_id', '$message', NOW() , ADDDATE(NOW(), INTERVAL 31 DAY))";
-			Database::executeSqlQuery($query);
+			$rs = parent::checkBannedUsers($user_id);
+			if(count($rs) == 0){
+				$query = "INSERT INTO bannedUsers(banId, user_id, description, from_ ,to_) VALUES(DEFAULT, '$user_id', '$message', NOW() , ADDDATE(NOW(), INTERVAL 31 DAY))";
+				Database::executeSqlQuery($query);
+			}else{
+				echo "this user is already banned from this site";
+			}
 		}
 
 		public function listAllProducts(){

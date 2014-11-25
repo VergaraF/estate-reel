@@ -4,7 +4,10 @@
         <link rel="stylesheet" type="text/css" href="CSS/mainLayout.css">
         <script type= "text/javascript" src = "JS/countries.js"></script>
     </head>	
-	<?php include('PreCode/header.php'); ?>
+	<?php 
+		include('PreCode/header.php');
+		require('authentication.php');
+	?>
 	<form name="buttons" method="POST" action="">
 		<input name="editProfile" type="submit" value="Edit Profile" />
 		<input name="changePass" type="submit" value="Change Password" />

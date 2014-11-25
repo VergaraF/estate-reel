@@ -14,7 +14,7 @@
 			$room_no 		= $post['rooms'];
 			$bath_no 		= $post['bathrooms'];
 			$living_room_no = $post['living_rooms'];
-			$price 			= parent::getEscaped(number_format($post['price'], 2));
+			$price 			= parent::getEscaped($post['price']);
 			$rangeType		= $post['rangeType'];
 
 			$loginObj = new Login();
@@ -133,14 +133,36 @@
 			return $address_id;
 		}
 
+		public function checkSortBy($value){
+			if (strcmp($value, "Sale") === 0 || strcmp($value, "Rent") === 0) {
+				return $this->sortByRange($value);
+			}elseif (strcmp($value, "low") === 0) {
+				$value = "ASC";
+				return $this->sortByPrice($value);
+
+			}elseif (strcmp($value, "high") === 0) {
+				$value = "DESC";
+				return $this->sortByPrice($value);
+			}else{
+				return $this->displayAllProducts();
+			}
+		}
+
 		// for example 500-1000 or 1000-1500 etc
-		public function sortByPrice(){
-		
+		public function sortByPrice($value){
+			$query = "SELECT * FROM dwellings INNER JOIN apartment_images 
+                                 ON dwellings.dwelling_Id = apartment_images.dwelling_Id
+                           GROUP BY dwellings.dwelling_Id
+                           ORDER BY dwellings.price $value";
+            return parent::getResultSetAsArray($query);
 		}
 
 		// for example for sale or for rent
-		public function sortByRange(){
-
+		public function sortByRange($type){
+			$query = "SELECT * FROM dwellings INNER JOIN apartment_images 
+                                 ON dwellings.dwelling_Id = apartment_images.dwelling_Id
+                              WHERE dwellings.rangeType = '$type'";
+            return parent::getResultSetAsArray($query);
 		}
 
 		// for example owner name
@@ -149,8 +171,12 @@
 		}
 
 		// for example apartment or house
-		public function sortByType(){
-
+		public function sortByType($type){
+			$query = "SELECT * FROM dwellings INNER JOIN apartment_images 
+                                 ON dwellings.dwelling_Id = apartment_images.dwelling_Id
+                              WHERE type = $type 
+                           GROUP BY dwellings.dwelling_Id";
+            return parent::getResultSetAsArray($query);
 		}
 	}
 ?>

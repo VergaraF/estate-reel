@@ -1,4 +1,58 @@
 <html>
+    <head>
+        <title>Estate R&eacuteel</title>
+        <link rel="stylesheet" type="text/css" href="CSS/mainLayout.css">
+        <script type= "text/javascript" src = "JS/countries.js"></script>
+    </head>	
+	<?php 
+		include('PreCode/header.php'); 
+		require('authentication.php');
+		require('accessDeni.php');
+	?>
+	<div id="container">
+	<div id="convo">
+		<p>List of conversations</p>
+	</div>
+	<div id="messages">
+		<p>List of messages</p>
+		<div id="sendMess">
+			<textarea id="messageInput"></textarea>
+			<button>Send</button>
+		</div>
+	</div>
+	</div>
+	</section>
+<style type="text/css">
+#convo{
+	position: relative;
+	background-color: yellow;
+	width: 150px;
+	height: 500px;
+	display: inline-block;
+}
+#messages{
+	position: relative;
+	background-color: red;
+	width: 500px;
+	height: 500px;
+	display: inline-block;
+}
+#container{
+	margin-top: 10px;
+	display: inline-block;
+}
+#messageInput{
+}
+#sendMess{
+}
+
+</style>
+</body>
+</html>
+
+
+
+<!-- <html>
 <head>
 	<title>Messenger</title>
 </head>
@@ -6,43 +60,44 @@
 	<button type="button">Create Conversation</button>
 <div id="conversation">
 	<p>All the conversation will be here</p>
-	<ul>
+	<ul> -->
 	<?php 
-		include('classes/databaseClass.php');
-		include('classes/loginClass.php');
-		include('classes/conversationClass.php');
-		$obj = new Conversation();
-		$allConvos = $obj->displayConversations(1);
-		for ($row=0; $row < count($allConvos); $row++) { 
+		// include('classes/databaseClass.php');
+		// include('classes/loginClass.php');
+		// include('classes/conversationClass.php');
+		// $obj = new Conversation();
+		// $allConvos = $obj->displayConversations(1);
+		// for ($row=0; $row < count($allConvos); $row++) { 
 	?>
-		<form>
+		<!-- <form>
 			<input name="hiddenId" type="hidden" value=" <?php echo $allConvos[$row]['conversationId']; ?> " />
-		</form>
+		</form> -->
 	<?php
-			echo "<input name='hiddenId' type='hidden' value='" . $allConvos[$row]['conversationId'] . "'/>";
-			echo "<li> Conversation id: " . $allConvos[$row]['conversationId'] . "</li>";
-		}
+		// 	echo "<input name='hiddenId' type='hidden' value='" . $allConvos[$row]['conversationId'] . "'/>";
+		// 	echo "<li> Conversation id: " . $allConvos[$row]['conversationId'] . "</li>";
+		// }
 	?>
-	</ul>
+	<!-- </ul>
 </div>
 <div id="messages">
 	<div id="allMessages">
-		<ul> <?php 
-			$allConvos = $obj->displayMessages(1);
-			for ($row=0; $row < count($allConvos); $row++) { 
-				echo "<li> Message $row: " . $allConvos[$row]['reply_message'] . "</li>";
-			}
+		<ul>  -->
+			<?php 
+			// $allConvos = $obj->displayMessages(1);
+			// for ($row=0; $row < count($allConvos); $row++) { 
+			// 	echo "<li> Message $row: " . $allConvos[$row]['reply_message'] . "</li>";
+			// }
 		 ?>
-		</ul>
+		<!-- </ul>
 	</div>
 	<div id="sendMessage">
 		<textarea id="mess"></textarea>
 		<button id="send">Send</button>
 	</div>
-</div>
+</div> -->
 
 <style type="text/css">
-#mess{
+/*#mess{
 	position: relative;
 	width: 500px;
 	font-size: 18px;
@@ -75,7 +130,7 @@
 }
 li {
 	height: 50px;
-}
-</style>
+}*/
+/*</style>
 </body>
-</html>
+</html>*/

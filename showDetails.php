@@ -4,7 +4,10 @@
         <link rel="stylesheet" type="text/css" href="CSS/mainLayout.css">
         <link rel="stylesheet" type="text/css" href="CSS/styles.css">
     </head>
-<?php include('PreCode/header.php'); ?>
+<?php 
+	include('PreCode/header.php');
+	require('authentication.php');
+?>
 	<div id="col1">
 		<div id="gallery">
 			<?php

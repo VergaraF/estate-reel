@@ -17,24 +17,21 @@
             session_start();
             $range = null;
             $user_id = null;
-            $bannedUser = null;
-          
+            $bannedUser = null;          
            
             if (isset($_SESSION['USERNAME'])) {
                 $range = $loginObj->getRangeType($_SESSION['USERNAME']);
                 $user_id = $loginObj->getUserId();
                 $bannedUser = $loginObj->checkBannedUsers($user_id);
             }
-            
            
-           if ($loginObj->isLoggedIn() && count($bannedUser) == 1) {
-              
-               ?>
+            if ($loginObj->isLoggedIn() && count($bannedUser) == 1) {
+        ?>
                <aside id="loggedMenu" >
                <button type="button" onClick="window.location.href='logout.php'">Logout</button>
                 </aside>
                <?php
-           }
+            }
             elseif($loginObj->isLoggedIn() && strcmp($range, "Regular") === 0){
         ?>
         <aside id="loggedMenu" >
