@@ -6,7 +6,7 @@
     </head>
 <?php 
 	include('PreCode/header.php');
-	require('authentication.php');
+	require('PreCode/authentication.php');
 ?>
 	<div id="col1">
 		<div id="gallery">

@@ -6,8 +6,8 @@
     </head>	
 	<?php 
 		include('PreCode/header.php'); 
-		require('authentication.php');
-		require('accessDeni.php');
+		require('PreCode/authentication.php');
+		
 	?>
 	<div id="container">
 	<div id="convo">

@@ -6,7 +6,7 @@
     </head>	
 	<?php 
 		include('PreCode/header.php');
-		require('authentication.php');
+		require('PreCode/authentication.php');
 	?>
 	<form name="buttons" method="POST" action="">
 		<input name="editProfile" type="submit" value="Edit Profile" />

@@ -6,7 +6,7 @@
     </head>
 <?php
 	include('PreCode/header.php');
-	require('authentication.php');
+	require('PreCode/authentication.php');
 	$databaseObj->createConnection();
 	$userId = $loginObj->getUserId();
 
