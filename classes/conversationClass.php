@@ -43,7 +43,12 @@ class Conversation extends Login{
 
 	//this will return an array that contains the conversations of a specific user
 	public function displayConversations($user_id){
-		$query = "SELECT * FROM conversation WHERE user_one = 1";
+		$query = "SELECT * FROM conversation WHERE user_one = '$user_id'";
+		return Database::getResultSetAsArray($query);
+	}
+
+	public function displayAllConversations(){
+		$query = "SELECT * FROM conversation";
 		return Database::getResultSetAsArray($query);
 	}
 
@@ -60,5 +65,16 @@ class Conversation extends Login{
 		$this->deleteConversation();
 	}
 	//************************************************************//
+
+	public function getSender($conversation_id){
+		$query = "SELECT sender FROM conversation_reply WHERE conversationId = '$conversation_id'";
+		$senderId = Database::getResultSetAsArray($query);
+		for ($row=0; $row < count($senderId); $row++) { 
+			 return $senderId[$row]['sender'];
+		}
+
+	}
 }
+
+
 ?>

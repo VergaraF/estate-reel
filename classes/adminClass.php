@@ -36,7 +36,8 @@
 		public function banUser($user_id, $message){
 			$rs = parent::checkBannedUsers($user_id);
 			if(count($rs) == 0){
-				$query = "INSERT INTO bannedUsers(banId, user_id, description, from_ ,to_) VALUES(DEFAULT, '$user_id', '$message', NOW() , ADDDATE(NOW(), INTERVAL 31 DAY))";
+				$description = Database::getEscaped($message);
+				$query = "INSERT INTO bannedUsers(banId, user_id, description, from_ ,to_) VALUES(DEFAULT, '$user_id', '$description', NOW() , ADDDATE(NOW(), INTERVAL 31 DAY))";
 				Database::executeSqlQuery($query);
 			}else{
 				echo "this user is already banned from this site";

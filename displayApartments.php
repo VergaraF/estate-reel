@@ -48,12 +48,11 @@
 	}elseif(isset($_POST['update'])){
 		$productObj->insertOrUpdateProduct($_POST);
 	}
+
 	$type = $loginObj->getRangeType($_SESSION['USERNAME']);
-	if (strcmp($type, "Admin") === 0) {
-		$rs = $productObj->displayAllProducts();
-	}else{
-		$rs = $productObj->displayOwnerProducts($userId);
-	}
+
+	$rs = $productObj->displayOwnerProducts($userId);
+	
 ?>
 	<h2>List of Apartments/Houses</h2>
 	<table border="1" align="center">

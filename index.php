@@ -16,10 +16,12 @@
 <?php
     }else{
     ?>
+
     <form name="filters" method="GET" action="">
-    <button type="button" onClick="window.location.href='index.php?sortBy=low'">Lowest To Highest</button>
-    <button type="button" onClick="window.location.href='index.php?sortBy=high'">Highest To Lowest</button>
-    <button type="button" onClick="window.location.href='index.php?sortBy=Sale'">For sales only</button>
+    <label>Sort by : </label>
+    <button type="button" onClick="window.location.href='index.php?sortBy=low'">Price: Ascendant</button>
+    <button type="button" onClick="window.location.href='index.php?sortBy=high'">Price: Descendant</button>
+    <button type="button" onClick="window.location.href='index.php?sortBy=Sale'">For sale only</button>
     <button type="button" onClick="window.location.href='index.php?sortBy=Rent'">For rent only</button>
     </form>
        <script type="text/javascript" src="JS/jquery-1.9.1.min.js"></script>

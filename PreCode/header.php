@@ -54,13 +54,6 @@
             <button type="button" onClick="window.location.href='displayApartments.php'">View</button>
             <button type="button" onClick="window.location.href='logout.php'">Logout</button>
         </aside>
-       <!--  <aside id="loggedMenu" >
-            <button type="button" onClick="window.location.href='index.php'">Home</button>
-            <button type="button" onClick="window.location.href='userProfile.php'">Admin</button>
-            <button type="button" onClick="window.location.href=''">Conversations</button>
-            <button type="button" onClick="window.location.href='displayApartments.php'">Apartments</button>
-            <button type="button" onClick="window.location.href='logout.php'">Logout</button>
-        </aside> -->
         <?php
           } else{
         ?>
