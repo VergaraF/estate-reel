@@ -3,14 +3,14 @@
 	left: 50%;
 	margin-left: -450px;
 	width:910px;
-	height:500px;
+	height:auto;
 }
 #col2{
 	position: relative;
 	left: 50%;
 	margin-left:-460px;
 	width:100%;
-	height:400px;
+	height:auto;
 }
 
 .bigImage {
@@ -29,4 +29,8 @@ img {
 .arrow{
 	margin-bottom: 200px;
 	cursor: pointer;
+}
+
+#details {
+	width: 800px;
 }
