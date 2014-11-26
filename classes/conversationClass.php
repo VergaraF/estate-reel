@@ -37,7 +37,7 @@ class Conversation extends Login{
 
 	//this will return an array of messages for a specific conversation
 	public function displayMessages($conversation_id){
-		$query = "SELECT reply_message FROM conversation_reply WHERE conversationId = '$conversation_id'";
+		$query = "SELECT * FROM conversation_reply WHERE conversationId = '$conversation_id'";
 		return Database::getResultSetAsArray($query);
 	}
 

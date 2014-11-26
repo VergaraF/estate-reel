@@ -59,7 +59,7 @@
 						$conversationObj->sendMessage($_POST['CID'], $_POST['message'], $user_id);
 						header("location: messenger.php");
 					}elseif (isset($_POST['deleteMess'])) {
-						$conversationObj->
+						//$conversationObj->
 					}
 					
 					
