@@ -104,6 +104,13 @@
 			return null;
 		}
 
+		public function getUsername($user_id){
+			$usernameRs = parent::getResultSetAsArray("SELECT username FROM users WHERE user_id = $user_id");
+			if (count($usernameRs) === 1) {
+				return $usernameRs[0]['username'];
+			}
+		}
+
 		public function getUsersProfileInfo(){
 			return parent::getResultSetAsArray("SELECT * FROM users WHERE username = '" . $_SESSION['USERNAME'] . "'");
 		}

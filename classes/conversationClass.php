@@ -43,7 +43,7 @@ class Conversation extends Login{
 
 	//this will return an array that contains the conversations of a specific user
 	public function displayConversations($user_id){
-		$query = "SELECT * FROM conversation WHERE user_one = '$user_id'";
+		$query = "SELECT * FROM conversation WHERE user_one = '$user_id' OR user_two = '$user_id'";
 		return Database::getResultSetAsArray($query);
 	}
 
@@ -74,7 +74,29 @@ class Conversation extends Login{
 		}
 
 	}
+// NEW STUFF
+	public function getUsernameForConvo($rsArrayWithIds, $user_id){
+		$user_id_one = $rsArrayWithIds[0]['user_one'];
+		$user_id_two = $rsArrayWithIds[0]['user_two'];
+		$userId = null;
+		if ($user_id === $user_id_one) {
+			$userId = $user_id_two;
+		}else{
+			$userId = $user_id_one;
+		}
+		$query = "SELECT username FROM users WHERE user_id = $userId";
+		$username = Database::getResultSetAsArray($query);
+		if (count($query) === 1) {
+			return $username[0]['username'];
+		}
+	}
+
+	public function getUserIdsForConvo($conversationId){
+		$query = "SELECT user_one, user_two FROM conversation WHERE conversationId = $conversationId";
+		return Database::getResultSetAsArray($query);
+	}
 }
+
 
 
 ?>

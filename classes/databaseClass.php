@@ -27,7 +27,9 @@
 		}
 
 		public function getLastId(){
-			return $this->connection->insert_id;
+			echo $this->createConnection()->insert_id;
+			return $this->createConnection()->insert_id;
+
 		}
 
 		public function executeSqlQuery($sqlQuery){
