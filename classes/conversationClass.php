@@ -28,7 +28,7 @@ class Conversation extends Login{
 		$query = "SELECT username FROM users WHERE user_id = $userId";
 		$username = Database::getResultSetAsArray($query);
 		if (count($query) === 1) {
-			return $username[0]['username'];
+			return strtoupper($username[0]['username']);
 		}
 	}
 
@@ -51,7 +51,8 @@ class Conversation extends Login{
 
 	//this will store the message into the database
 	public function sendMessage($conversation_id, $message, $user_id){
-		$query = "INSERT INTO conversation_reply(cr_id, sender, reply_message, conversationId) VALUES(DEFAULT, $user_id, '$message', '$conversation_id')";
+		$description = Database::getEscaped($message);
+		$query = "INSERT INTO conversation_reply(cr_id, sender, reply_message, conversationId) VALUES(DEFAULT, $user_id, '$description', '$conversation_id')";
 		Database::executeSqlQuery($query);
 	}
 
@@ -72,6 +73,10 @@ class Conversation extends Login{
 		Database::executeSqlQuery($query);
 	}
 
+	public function displayAllConversations(){
+		
+	}
+
 	//DO WE REALLY NEED THIS FUNCTION?? BECAUSE WITH THIS FUNCTION THE USER WILL ABLE TO DELETE ALL THE CONVERSATIONS AT ONE CLICK
 	//************************************************************//
 	public function deleteAllConversations($user_id){
@@ -80,7 +85,7 @@ class Conversation extends Login{
 		$this->deleteConversation();
 	}
 	//************************************************************//
-		public function getSender($conversation_id){
+	public function getSender($conversation_id){
 		$query = "SELECT sender FROM conversation_reply WHERE conversationId = '$conversation_id'";
 		$senderId = Database::getResultSetAsArray($query);
 		for ($row=0; $row < count($senderId); $row++) { 

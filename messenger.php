@@ -7,7 +7,6 @@
 	<?php 
 		include('PreCode/header.php'); 
 		require('PreCode/authentication.php');
-		//require('accessDeni.php');
 	?>
 	<div id="container">
 		<form name="createForm" method="POST" action="createConvo.php">
@@ -15,7 +14,6 @@
 		</form>
 	<div id="convo">
 		<p>List of conversations</p>
-		
 		<table>
 			<?php 
 				$user_id = $loginObj->getUserId();
@@ -23,50 +21,50 @@
 				for ($row=0; $row < count($convoArray); $row++) {
 					$userIdsArray = $conversationObj->getUserIdsForConvo($convoArray[$row]['conversationId']);
 					$otherUsername = $conversationObj->getUsernameForConvo($userIdsArray, $user_id);
-					echo "<form name='conversationDelete' method='POST' action=''>";
-					echo "<tr><td>". $otherUsername ."</td>";
-					echo "<input type='hidden' name='c_id' value='" . $convoArray[$row]['conversationId'] ."'>";
-					echo "<td><input type='submit' name='show' value='show messages'></td>";
-					echo "<td><input type='submit' name='deleteConvo' value='Delete'></td></tr>";
-					echo "</form>";
-				}
 			?>
+					<form name='conversationDelete' method='POST' action=''>
+						<tr><td> <?php echo $otherUsername ?> </td>
+						<input type="hidden" name="c_id" value=" <?php echo $convoArray[$row]['conversationId']; ?>">
+						<td><input type='submit' name='show' value='show messages'></td>
+						<td><input type='submit' name='deleteConvo' value='Delete'></td></tr>
+					</form>
+		<?php  } ?>
 		</table>
-		
 	</div>
 	<div id="messages">
 		<p>List of messages</p>
-
-		<form name="sendOrDelete" method="POST" action="">
-			<table>
-				<?php
-					if (isset($_POST['show'])) {
-						$messages = $conversationObj->displayMessages($_POST['c_id']);
-						for ($row=0; $row < count($messages); $row++) { 
-							echo "<tr>
-								<td>" . $loginObj->getUsername($messages[$row]['sender']) . ": " . $messages[$row]['reply_message'] . "</td>
-								<input type='hidden' name='CID' value='" . $messages[$row]['cr_id'] ."'>
-								<td><input type='submit' name='deleteMess' value='Delete'></td>
-							 </tr>";
-						}
-				?>
-							<div id="sendMess">
-								<textarea id="messageInput" name="message"></textarea>
-								<input name="sendMessage" type="submit" value="Send">
-							</div>
-				<?php
-					}elseif (isset($_POST['sendMessage'])) {
-						$conversationObj->sendMessage($_POST['CID'], $_POST['message'], $user_id);
-						header("location: messenger.php");
-					}elseif (isset($_POST['deleteMess'])) {
-						//$conversationObj->
-					}
-					
-					
-				 ?>
-			</table>
-		</form>
-		
+		<?php  
+			if (isset($_POST['show'])) {
+				$messages = $conversationObj->displayMessages($_POST['c_id']);
+		?>
+		<table>
+			<?php
+				for ($row=0; $row < count($messages); $row++) { 
+			?>
+					<form name='sendOrDelete' method='POST' action=''>
+						<tr>
+							<td> <?php echo $loginObj->getUsername($messages[$row]['sender']) . ": " . $messages[$row]['reply_message']; ?> </td>
+							<input type="hidden" name="cr_id_toDeleteMessage" value="<?php echo $messages[$row]['cr_id'] ?>">
+							<td><input type='submit' name='deleteMess' value='Delete'></td>
+						</tr>
+			<?php } ?>
+						<div id="sendMess">
+							<input type="hidden" name="c_id_toSendMessage" value="<?php echo $_POST['c_id']; ?>">
+							<textarea id="messageInput" name="message"></textarea>
+							<input name="sendMessage" type="submit" value="Send">
+						</div>
+					</form>
+		</table>			
+			<?php
+				}elseif (isset($_POST['sendMessage'])) {
+					$conversationObj->sendMessage($_POST['c_id_toSendMessage'], $_POST['message'], $user_id);
+				}elseif (isset($_POST['deleteMess'])) {
+					$conversationObj->deleteMessage($_POST['cr_id_toDeleteMessage']);
+				}elseif (isset($_POST['deleteConvo'])) {
+					$conversationObj->deleteConversation($_POST['c_id']);
+					header("location: messenger.php");
+				}
+			 ?>
 	</div>
 	</div>
 	</section>
