@@ -7,18 +7,66 @@
 	<?php 
 		include('PreCode/header.php'); 
 		require('PreCode/authentication.php');
-		
+		//require('accessDeni.php');
 	?>
 	<div id="container">
+		<form name="createForm" method="POST" action="createConvo.php">
+			<input type="submit" name="create" value="Create Conversation">
+		</form>
 	<div id="convo">
 		<p>List of conversations</p>
+		
+		<table>
+			<?php 
+				$user_id = $loginObj->getUserId();
+				$convoArray = $conversationObj->displayConversations($user_id);
+				for ($row=0; $row < count($convoArray); $row++) {
+					$userIdsArray = $conversationObj->getUserIdsForConvo($convoArray[$row]['conversationId']);
+					$otherUsername = $conversationObj->getUsernameForConvo($userIdsArray, $user_id);
+					echo "<form name='conversationDelete' method='POST' action=''>";
+					echo "<tr><td>". $otherUsername ."</td>";
+					echo "<input type='hidden' name='c_id' value='" . $convoArray[$row]['conversationId'] ."'>";
+					echo "<td><input type='submit' name='show' value='show messages'></td>";
+					echo "<td><input type='submit' name='deleteConvo' value='Delete'></td></tr>";
+					echo "</form>";
+				}
+			?>
+		</table>
+		
 	</div>
 	<div id="messages">
 		<p>List of messages</p>
-		<div id="sendMess">
-			<textarea id="messageInput"></textarea>
-			<button>Send</button>
-		</div>
+
+		<form name="sendOrDelete" method="POST" action="">
+			<table>
+				<?php
+					if (isset($_POST['show'])) {
+						$messages = $conversationObj->displayMessages($_POST['c_id']);
+						for ($row=0; $row < count($messages); $row++) { 
+							echo "<tr>
+								<td>" . $loginObj->getUsername($messages[$row]['sender']) . ": " . $messages[$row]['reply_message'] . "</td>
+								<input type='hidden' name='CID' value='" . $messages[$row]['cr_id'] ."'>
+								<td><input type='submit' name='deleteMess' value='Delete'></td>
+							 </tr>";
+						}
+				?>
+							<div id="sendMess">
+								<textarea id="messageInput" name="message"></textarea>
+								<input name="sendMessage" type="submit" value="Send">
+							</div>
+				<?php
+					}elseif (isset($_POST['sendMessage'])) {
+						$conversationObj->sendMessage($_POST['CID'], $_POST['message'], $user_id);
+						header("location: messenger.php");
+					}elseif (isset($_POST['deleteMess'])) {
+						$conversationObj->
+					}
+					
+					
+				 ?>
+			</table>
+		</form>
+		
 	</div>
 	</div>
 	</section>
@@ -26,7 +74,7 @@
 #convo{
 	position: relative;
 	background-color: yellow;
-	width: 150px;
+	width: 250px;
 	height: 500px;
 	display: inline-block;
 }
@@ -49,88 +97,3 @@
 </style>
 </body>
 </html>
-
-
-
-<!-- <html>
-<head>
-	<title>Messenger</title>
-</head>
-<body>
-	<button type="button">Create Conversation</button>
-<div id="conversation">
-	<p>All the conversation will be here</p>
-	<ul> -->
-	<?php 
-		// include('classes/databaseClass.php');
-		// include('classes/loginClass.php');
-		// include('classes/conversationClass.php');
-		// $obj = new Conversation();
-		// $allConvos = $obj->displayConversations(1);
-		// for ($row=0; $row < count($allConvos); $row++) { 
-	?>
-		<!-- <form>
-			<input name="hiddenId" type="hidden" value=" <?php echo $allConvos[$row]['conversationId']; ?> " />
-		</form> -->
-	<?php
-		// 	echo "<input name='hiddenId' type='hidden' value='" . $allConvos[$row]['conversationId'] . "'/>";
-		// 	echo "<li> Conversation id: " . $allConvos[$row]['conversationId'] . "</li>";
-		// }
-	?>
-	<!-- </ul>
-</div>
-<div id="messages">
-	<div id="allMessages">
-		<ul>  -->
-			<?php 
-			// $allConvos = $obj->displayMessages(1);
-			// for ($row=0; $row < count($allConvos); $row++) { 
-			// 	echo "<li> Message $row: " . $allConvos[$row]['reply_message'] . "</li>";
-			// }
-		 ?>
-		<!-- </ul>
-	</div>
-	<div id="sendMessage">
-		<textarea id="mess"></textarea>
-		<button id="send">Send</button>
-	</div>
-</div> -->
-
-<style type="text/css">
-/*#mess{
-	position: relative;
-	width: 500px;
-	font-size: 18px;
-}
-#send{
-	margin-left: 450px;
-	margin-top: 45px;
-}
-#allMessages{
-	height: 400px;
-	background-color: yellow;
-	margin-top: -16px;
-}
-#sendMessage{
-	height: 100px;
-	background-color: orange;
-}
-#conversation{
-	background-color: blue;
-	position: absolute;
-	width: 250px;
-	height: 500px;
-}
-#messages{
-	background-color: red;
-	position: absolute;
-	margin-left: 250px;
-	height: 500px;
-	width: 500px;
-}
-li {
-	height: 50px;
-}*/
-/*</style>
-</body>
-</html>*/

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2014 at 09:59 PM
+-- Generation Time: Nov 26, 2014 at 02:14 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -103,7 +103,16 @@ CREATE TABLE IF NOT EXISTS `conversation` (
   `user_one` int(6) NOT NULL,
   `user_two` int(6) NOT NULL,
   `time_` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `conversation`
+--
+
+INSERT INTO `conversation` (`conversationId`, `user_one`, `user_two`, `time_`) VALUES
+(1, 1, 2, '2014-11-25 23:06:48'),
+(2, 1, 4, '2014-11-25 23:28:52'),
+(3, 2, 3, '2014-11-25 23:47:24');
 
 -- --------------------------------------------------------
 
@@ -113,10 +122,32 @@ CREATE TABLE IF NOT EXISTS `conversation` (
 
 CREATE TABLE IF NOT EXISTS `conversation_reply` (
 `cr_id` int(6) NOT NULL,
+  `sender` int(6) NOT NULL,
   `reply_message` varchar(1000) DEFAULT NULL,
   `time_` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `conversationId` int(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+
+--
+-- Dumping data for table `conversation_reply`
+--
+
+INSERT INTO `conversation_reply` (`cr_id`, `sender`, `reply_message`, `time_`, `conversationId`) VALUES
+(1, 1, 'hello fabian', '2014-11-25 23:08:01', 1),
+(2, 1, 'how are you?', '2014-11-25 23:08:22', 1),
+(3, 2, 'hey ajmer ', '2014-11-25 23:09:14', 1),
+(4, 2, 'whats up?', '2014-11-25 23:09:25', 1),
+(5, 1, 'i am fine', '2014-11-25 23:09:56', 1),
+(6, 1, 'hello roy', '2014-11-25 23:28:52', 2),
+(7, 1, 'whats up?', '2014-11-25 23:29:03', 2),
+(8, 1, '', '2014-11-25 23:41:07', 2),
+(9, 1, '', '2014-11-25 23:41:25', 2),
+(10, 2, 'hey hello', '2014-11-25 23:45:36', 1),
+(11, 2, 'hello camilo', '2014-11-25 23:47:24', 3),
+(12, 2, 'hey ', '2014-11-25 23:47:37', 3),
+(13, 2, 'heyyyyyy', '2014-11-25 23:48:17', 1),
+(14, 2, 'heeeeeee', '2014-11-25 23:56:33', 3),
+(15, 2, 'asfafa', '2014-11-26 01:03:49', 1);
 
 -- --------------------------------------------------------
 
@@ -135,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `dwellings` (
   `no_of_living_rooms` int(11) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
   `rangeType` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `dwellings`
@@ -143,9 +174,9 @@ CREATE TABLE IF NOT EXISTS `dwellings` (
 
 INSERT INTO `dwellings` (`dwelling_Id`, `address_id`, `user_id`, `type`, `description`, `no_of_rooms`, `no_of_bathrooms`, `no_of_living_rooms`, `price`, `rangeType`) VALUES
 (1, 1, 2, 'Apartment', 'Bright, large studios (1 1/2, 2 1/2) for rent in well maintained, quiet building. All dwellings are clean and renovated with hardwood floors. Include hot water, heating, stove, fridge. Laundry room in the building, janitor on the spot. Close to transport and services (metro Vendome and bus 105). Close to Concordia University (Loyola Campus). \r\n\r\nAvailable now, December 1st or January 1st. Price range between $550 and $590 per month. \r\nTo visit call 514-294-5868', 1, 1, 1, 500, 'Rent'),
-(2, 2, 2, 'Apartment', 'Large windows frame bright, gorgeous views of Mount Royal and downtown. You?ll feel right at home with an updated kitchen, a renovated bathroom, a balcony and hardwood flooring. Need to get to McGill, Royal Victoria or MGH? Skip transit because they?re all easy walks from La Tour Horizon.\r\n\r\n', 2, 1, 1, 1699, 'Rent'),
-(3, 3, 2, 'Apartment', 'includes fridge, stove, oven, washing machine, dryer and a dishwasher; \r\ndoesn''t include electricity \r\n\r\nit''s located on Rene-levesque street and it has a balcony (long one) on the street \r\n\r\n', 1, 1, 1, 1500, 'Rent'),
-(4, 4, 2, 'Apartment', 'Super appart 3.5 au coeur du plateau mont royal, entre le Parc Lafontaine et l?avenue Mont Royal \r\n\r\n1 chambre ferm?e \r\n1 grand salon \r\ncuisine ouverte \r\nbalcon \r\nbeaucoup de rangements \r\nparquet \r\ntr?s lumineux \r\nlaundry room et garage ? v?lo dans l?immeuble \r\n\r\nLe loyer comprend les charges \r\nCession de bail \r\nLibre ? partir du 22 d?cembre \r\n\r\ncommerces et restaurants ? 3 minutes ? pied \r\npr?s du m?tro Mont-Royal \r\nlignes de bus 11 et 14 au pied de l?immeuble \r\n\r\nJe rentre en Californie le 22 d?cembre, la fin du mois de d?cembre est gratuite. \r\n\r\nIdeal pour les nouveaux arrivants ? Montr?al: je pr?f?rerais laisser les meubles (table, canap?, lit, bureau, diff?rents meubles ikea achet?s neufs il y a un peu plus d?un an, tous en parfait ?tat) faites moi une offre, et il ne vous restera plus qu?a poser vos valises! ', 2, 3, 2, 390000, 'Sale');
+(2, 2, 1, 'Apartment', 'Large windows frame bright, gorgeous views of Mount Royal and downtown. You?ll feel right at home with an updated kitchen, a renovated bathroom, a balcony and hardwood flooring. Need to get to McGill, Royal Victoria or MGH? Skip transit because they?re all easy walks from La Tour Horizon.\r\n\r\n', 2, 1, 1, 1699, 'Rent'),
+(3, 3, 1, 'Apartment', 'includes fridge, stove, oven, washing machine, dryer and a dishwasher; \r\ndoesn''t include electricity \r\n\r\nit''s located on Rene-levesque street and it has a balcony (long one) on the street \r\n\r\n', 1, 1, 1, 1500, 'Rent'),
+(4, 4, 3, 'Apartment', 'Super appart 3.5 au coeur du plateau mont royal, entre le Parc Lafontaine et l?avenue Mont Royal 1 chambre ferm?e 1 grand salon cuisine ouverte balcon beaucoup de rangements parquet tr?s lumineux laundry room et garage ? v?lo dans l?immeuble Le loyer comprend les charges Cession de bail Libre ? partir du 22 d?cembre commerces et restaurants ? 3 minutes ? pied pr?s du m?tro Mont-Royal lignes de bus 11 et 14 au pied de l?immeuble Je rentre en Californie le 22 d?cembre, la fin du mois de d?cembre est gratuite. Ideal pour les nouveaux arrivants ? Montr?al: je pr?f?rerais laisser les meubles (table, canap?, lit, bureau, diff?rents meubles ikea achet?s neufs il y a un peu plus d?un an, tous en parfait ?tat) faites moi une offre, et il ne vous restera plus qu?a poser vos valises! ', 2, 3, 2, 390000, 'Sale');
 
 -- --------------------------------------------------------
 
@@ -164,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `salt` varchar(255) NOT NULL,
   `type` varchar(50) DEFAULT NULL,
   `rangeType` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `users`
@@ -173,7 +204,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`user_id`, `firstname`, `lastname`, `email`, `phoneNumber`, `username`, `password`, `salt`, `type`, `rangeType`) VALUES
 (1, 'Ajmer', 'Singh', 'Ajmer@ajmer.ca', '438 323 2343', 'ajmer', '45FIRt6yMSMKE', '45fee2b5f36b86015a2ab9564e765aa0b582f7c66a74c54c4b153128048bc888', 'Tenant', 'Regular'),
 (2, 'Fabian', 'Vergara', 'hg-faver@hotmail.com', '222 324 2344', 'faver', 'd3yTTT.8w5.oo', 'd341cc51ea668a4bd7475905756b864efca1138c6d3e32a0ce0c0357d0f7acc3', 'Landlord', 'Admin'),
-(3, 'Camilo', 'Vides', 'Camilo@yahoo.ca', '514 233 3421', 'camilo', '1clHbzjXlIRxY', '1ca5f21a442fb85c95de9bfffcaa38851341959ea1dfd38ff9b852aaa630104f', 'Tenant', 'Regular');
+(3, 'Camilo', 'Vides', 'Camilo@yahoo.ca', '514 233 3421', 'camilo', '1clHbzjXlIRxY', '1ca5f21a442fb85c95de9bfffcaa38851341959ea1dfd38ff9b852aaa630104f', 'Tenant', 'Regular'),
+(4, 'Roy', 'Khoury', 'roy@yahoo.ca', '1231231234', 'roy_123', '62bwEQDGc3xOk', '62c52c5b9ea4aecc8f8b5d6b2b9308c14792d56d2ad6fe3956fb580143960e98', 'Tenant', 'Regular');
 
 --
 -- Indexes for dumped tables
@@ -207,7 +239,7 @@ ALTER TABLE `conversation`
 -- Indexes for table `conversation_reply`
 --
 ALTER TABLE `conversation_reply`
- ADD PRIMARY KEY (`cr_id`), ADD KEY `conversationId` (`conversationId`);
+ ADD PRIMARY KEY (`cr_id`), ADD KEY `conversationId` (`conversationId`), ADD KEY `convo_reply_sender_userId_fk` (`sender`);
 
 --
 -- Indexes for table `dwellings`
@@ -244,22 +276,22 @@ MODIFY `banId` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `conversation`
 --
 ALTER TABLE `conversation`
-MODIFY `conversationId` int(6) NOT NULL AUTO_INCREMENT;
+MODIFY `conversationId` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `conversation_reply`
 --
 ALTER TABLE `conversation_reply`
-MODIFY `cr_id` int(6) NOT NULL AUTO_INCREMENT;
+MODIFY `cr_id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `dwellings`
 --
 ALTER TABLE `dwellings`
-MODIFY `dwelling_Id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `dwelling_Id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `user_id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `user_id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --
@@ -287,7 +319,8 @@ ADD CONSTRAINT `conversation_ibfk_2` FOREIGN KEY (`user_two`) REFERENCES `users`
 -- Constraints for table `conversation_reply`
 --
 ALTER TABLE `conversation_reply`
-ADD CONSTRAINT `conversation_reply_ibfk_1` FOREIGN KEY (`conversationId`) REFERENCES `conversation` (`conversationId`);
+ADD CONSTRAINT `conversation_reply_ibfk_1` FOREIGN KEY (`conversationId`) REFERENCES `conversation` (`conversationId`),
+ADD CONSTRAINT `convo_reply_sender_userId_fk` FOREIGN KEY (`sender`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `dwellings`
