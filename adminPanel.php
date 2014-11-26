@@ -101,13 +101,20 @@
 			    $profileInfo = $loginObj->getUserById($_POST['hiddenID']);
 				if (count($profileInfo) > 0) {
 					for($row = 0; $row < count($profileInfo); $row++){
-						echo "<h2>User Profile</h2>";
-						echo "<tr><td>First Name</td>" . "<td><input name='firstname' type='text' value='" 	. $profileInfo[$row]['firstname'] ."'></td></tr>" .
-							 "<tr><td>Last Name</td>"  . "<td><input name='lastname' type='text' value='" 	. $profileInfo[$row]['lastname']  ."'></td></tr>" .
-							 "<tr><td>Email</td>" 	   . "<td><input name='email' type='text' value='" 		. $profileInfo[$row]['email'] 	  ."'></td></tr>" .
-							 "<tr><td>Username</td>"   . "<td><input name='username' type='text' value='" 	. $profileInfo[$row]['username']  ."'></td></tr>" .
-							 "<tr><td>Phone Num</td>"  . "<td><input name='phoneNum' type='text' value='" 	. $profileInfo[$row]['phoneNumber']  ."'></td></tr>" .
-							 "<tr><td></td>"   		   . "<td><input name='update' type='submit' value='Save Changes'></td></tr>";
+						echo "<form name='updateProfile' method='POST' action=''>" .
+							 "<h2>User Profile</h2>" .
+						     "<tr><td>First Name : </td>" . "<td><input name='firstname' type='text' value='" 	. $profileInfo[$row]['firstname'] ."'></td></tr>" .
+							 "<tr><td>Last Name : </td>"  . "<td><input name='lastname' type='text' value='" 	. $profileInfo[$row]['lastname']  ."'></td></tr>" .
+							 "<tr><td>Email : </td>" 	   . "<td><input name='email' type='text' value='" 		. $profileInfo[$row]['email'] 	  ."'></td></tr>" .
+							 "<tr><td>Username : </td>"   . "<td><input name='username' type='text' value='" 	. $profileInfo[$row]['username']  ."'></td></tr>" .
+							 "<tr><td>Phone No. : </td>"  . "<td><input name='phoneNum' type='text' value='" 	. $profileInfo[$row]['phoneNumber']  ."'></td></tr>" .
+							 "<tr><td>Range : </td><td><select id='urng' name='urng'>" .
+                  			 "<option value=" . $profileInfo[$row]['rangeType'] . ">" . $profileInfo[$row]['rangeType'] ."</option>" .
+                			 "<option value=" . $adminObj->getOppositeRange($profileInfo[$row]['rangeType']) . ">" . $adminObj->getOppositeRange($profileInfo[$row]['rangeType']) . "</option>" .
+                			 "</select></td>" .
+                			 "<input type='hidden' name='hiddenUserId' value='" . $profileInfo[$row]['user_id'] . "'>" . 
+							 "<tr><td></td><td><input name='updateU' type='submit' value='Save Changes'></td></tr>";
+					    echo "</form>";
 					}
 				}
 							
@@ -130,6 +137,8 @@
 				}
 			} elseif (isset($_POST['ban'])) {
 				$adminObj->banUser($_POST['hiddenUserId'], $_POST['description']);
+			} elseif (isset($_POST['updateU'])){
+				$adminObj->updateUser($_POST);
 			}
 	?>
 				<?php
@@ -179,10 +188,84 @@
 
 					break;
 				case 'conversation':
-					$rs = $conversationObj->displayAllConversations();
+					
 					?>
-					<h2>List of conversations</h2>
+						<div id="container">
+							
+						<div id="convo">
+							<p>List of conversations</p>
+							<table>
+								<?php 
+								//	$user_id = $loginObj->getUserId();
+									$convoArray = $conversationObj->displayAllConversations();
+									for ($row=0; $row < count($convoArray); $row++) {
+										$userIdsArray = $conversationObj->getUserIdsForConvo($convoArray[$row]['conversationId']);
+										$usernameArray = $conversationObj->getUsernamesForConvo($userIdsArray);
 
+										$username_one = $usernameArray[0];
+										$username_two = $usernameArray[1];
+								?>
+										<form name='conversationDelete' method='POST' action=''>
+											<tr><td> <?php echo "<p>" . $username_one . " - " . $username_two . "</p>"?> </td>
+											<input type="hidden" name="c_id" value=" <?php echo $convoArray[$row]['conversationId']; ?>">
+											<td><input type='submit' name='show' value='show messages'></td>
+											<td><input type='submit' name='deleteConvo' value='Delete'></td></tr>
+										</form>
+							<?php  } ?>
+							</table>
+						</div>
+						<div id="messages">
+							<p>List of messages</p>
+							<?php  
+								if (isset($_POST['show'])) {
+									$messages = $conversationObj->displayMessages($_POST['c_id']);
+							?>
+							<table>
+								<?php
+									for ($row=0; $row < count($messages); $row++) { 
+								?>
+										<form name='sendOrDelete' method='POST' action=''>
+											<tr>
+												<td> <?php echo $loginObj->getUsername($messages[$row]['sender']) . ": " . $messages[$row]['reply_message']; ?> </td>
+												<input type="hidden" name="cr_id_toDeleteMessage" value="<?php echo $messages[$row]['cr_id'] ?>">
+												<td><input type='submit' name='deleteMess' value='Delete'></td>
+											</tr>
+								<?php } ?>
+											
+										</form>
+							</table>			
+								<?php
+									
+									}elseif (isset($_POST['deleteMess'])) {
+										$conversationObj->deleteMessage($_POST['cr_id_toDeleteMessage']);
+									}elseif (isset($_POST['deleteConvo'])) {
+										$conversationObj->deleteConversation($_POST['c_id']);
+										header("location: adminPanel.php?action=conversation");
+									}
+								 ?>
+						</div>
+						</div>
+						</section>
+					<style type="text/css">
+					#convo{
+						position: relative;
+						background-color: yellow;
+						width: 250px;
+						height: 500px;
+						display: inline-block;
+					}
+					#messages{
+						position: relative;
+						background-color: red;
+						width: 500px;
+						height: 500px;
+						display: inline-block;
+					}
+					#container{
+						margin-top: 10px;
+						display: inline-block;
+					}
+					</style>
 					<?php
 
 					break;

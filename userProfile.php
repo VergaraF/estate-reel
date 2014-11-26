@@ -12,11 +12,7 @@
 		<input name="editProfile" type="submit" value="Edit Profile" />
 		<input name="changePass" type="submit" value="Change Password" />
 		<input name="deactivate" type="submit" value="Deactivate My Account" />
-		<?php 
-			  if(strcmp($range, "Admin") === 0){
-		?>
-		<input name="displayAll" type="submit" value="Display All Users" />
-		<?php } ?>
+
 	</form>
 	<form name="updateProfile" method="POST" action="">
 	<table align="center">
@@ -53,40 +49,7 @@
 					<input name="confirmNewPass" type="password" placeholder="Confirm New Password" required /><br>
 					<input name="resetPass" type="submit" value="Reset">
 				</form>
-		<?php 
-			} elseif (isset($_POST['displayAll'])) {
-		?>
-				<h2>List of All Users</h2>
-				<table align="center" border="1">
-					<tbody>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Username</th>
-						<th>Email</th>
-						<th>Range</th>
-						<th>Options</th>
-					<?php
-						$profileInfo = $loginObj->getAllUsers();
-						if (count($profileInfo) > 0) {
-							for($row = 0; $row < count($profileInfo); $row++){
-								echo "<tr><td>" . $profileInfo[$row]['firstname'] . "</td>" .
-									 "<td>" . $profileInfo[$row]['lastname'] . "</td>" .
-									 "<td>" . $profileInfo[$row]['username'] . "</td>" .
-									 "<td>" . $profileInfo[$row]['email'] . "</td>" . 
-									 "<td>" . $profileInfo[$row]['rangeType'] . "</td>";
-					?>
-									<form name="deleteApart" method="POST" action="">
-										<input name="hiddenID" type="hidden" value="<?php echo $profileInfo[$row]['user_id']; ?>" />
-										<td>
-											<input name='edit' type='submit' value='Edit' />
-											<input name='deactivateUser' type='submit' value='Deactivate' />
-											<input name='banUser' type='submit' value='Ban' />
-										</td>
-									</form>
-					<?php
-							}
-						}
-					?>
+		
 					</tbody>
 				</table>
 	<?php 

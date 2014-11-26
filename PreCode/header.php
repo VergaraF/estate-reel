@@ -39,7 +39,8 @@
             <button type="button" onClick="window.location.href='userProfile.php'">Profile</button>
             <button type="button" onClick="window.location.href='messenger.php'">Messages</button>
             <button type="button" onClick="window.location.href='product.php'" >Upload</button>
-            <button type="button" onClick="window.location.href='displayApartments.php'">View</button>
+            <button  type="button" onClick="window.location.href='displayApartments.php'">Your places</button>
+            <button type="button" onClick="window.location.href='search.php'">Search</button>
             <button type="button" onClick="window.location.href='logout.php'">Logout</button>
         </aside>
         <?php
@@ -51,7 +52,8 @@
             <button type="button" onClick="window.location.href='adminPanel.php'">Admin</button>
             <button type="button" onClick="window.location.href='messenger.php'">Messages</button>
             <button type="button" onClick="window.location.href='product.php'" >Upload</button>
-            <button type="button" onClick="window.location.href='displayApartments.php'">View</button>
+            <button  type="button" onClick="window.location.href='displayApartments.php'">Your places</button>
+            <button type="button" onClick="window.location.href='search.php'">Search</button>
             <button type="button" onClick="window.location.href='logout.php'">Logout</button>
         </aside>
         <?php
@@ -59,6 +61,7 @@
         ?>
         <aside id="unloggedMenu">
             <button type="button" onClick="window.location.href='index.php'">Home</button>
+            <button type="button" onClick="window.location.href='search.php'">Search</button>
             <button type="button" onClick="window.location.href='login.php'" >Login</button>
             <button type="button" onClick="window.location.href='signUp.php'">Sign Up</button>
         </aside>

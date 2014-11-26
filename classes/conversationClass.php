@@ -32,6 +32,17 @@ class Conversation extends Login{
 		}
 	}
 
+	public function getUsernamesForConvo($rsArrayWithIds){
+		$user_id_one = $rsArrayWithIds[0]['user_one'];
+		$user_id_two = $rsArrayWithIds[0]['user_two'];
+
+		$userName_one = parent::getUsername($user_id_one);
+		$userName_two = parent::getUsername($user_id_two);
+
+		$arrayWithNames = array($userName_one, $userName_two);
+		return $arrayWithNames;
+	}
+
 	public function getUserIdsForConvo($conversationId){
 		$query = "SELECT user_one, user_two FROM conversation WHERE conversationId = $conversationId";
 		return Database::getResultSetAsArray($query);
@@ -74,7 +85,8 @@ class Conversation extends Login{
 	}
 
 	public function displayAllConversations(){
-		
+		$query = "SELECT * FROM conversation";
+		return Database::getResultSetAsArray($query);
 	}
 
 	//DO WE REALLY NEED THIS FUNCTION?? BECAUSE WITH THIS FUNCTION THE USER WILL ABLE TO DELETE ALL THE CONVERSATIONS AT ONE CLICK

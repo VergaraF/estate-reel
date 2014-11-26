@@ -4,8 +4,21 @@
 			return parent::getAllUsers();
 		}
 
-		public function updateUser(){
-			return parent::updateProfile();
+		public function updateUser($post){
+			$user_id 	= $post['hiddenUserId'];
+			$first_name = $post['firstname'];
+			$last_name  = $post['lastname'];
+			$email 		= $post['email'];
+			$username 	= $post['username'];
+			$phone 		= $post['phoneNum'];
+			$range 	    = $post['urng'];
+			$update = "UPDATE users SET firstname 	 = '$first_name', lastname      = '$last_name',
+										email 	  	 = '$email', 	  username 		 = '$username',
+										phoneNumber  = '$phone',	  rangeType 	 = '$range'
+									WHERE user_id = '$user_id'";
+			parent::executeSqlQuery($update);
+			
+		
 		}
 
 		public function modifyUser($user_id){
@@ -59,6 +72,14 @@
 
 		public function listAllMessages(){
 			//call displayMessages function inside conversation class
+		}
+
+		public function getOppositeRange($actualRange){
+			if (strcmp($actualRange, "Admin") === 0){
+				return "Regular";
+			}else{
+				return "Admin";
+			}
 		}
 	}
 ?>
