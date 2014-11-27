@@ -197,8 +197,24 @@
 	        			 price 			  < '$max_price'								   AND
 	        			 type             = '$kindOfPlace'"; 
 	        return parent::getResultSetAsArray($query);
+		}
 
+		public function searchSpecific($get){
+			$typeOfDeal  = $get['type'];
+	    	$rooms	     = $get['rooms'];
+	     	$baths       = $get['baths'];
+	        $max_price	 = $get['price'];
+	        $kindOfPlace = $get['place'];
 
+	        $query = "SELECT * FROM dwellings INNER JOIN apartment_images 
+                                 ON dwellings.dwelling_Id = apartment_images.dwelling_Id
+                         WHERE 
+	        			 rangeType        = '$typeOfDeal' AND 
+	        			 no_of_rooms 	  = '$rooms' 	  AND 
+	        			 no_of_bathrooms  = '$baths'	  AND
+	        			 price 			  < '$max_price'  AND
+	        			 type             = '$kindOfPlace'"; 
+	        return parent::getResultSetAsArray($query);
 		}
 	}
 ?>
