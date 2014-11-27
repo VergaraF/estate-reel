@@ -178,5 +178,27 @@
                            GROUP BY dwellings.dwelling_Id";
             return parent::getResultSetAsArray($query);
 		}
+
+		public function searchFlexible($get){
+	     	$typeOfDeal		 = $get['type'];
+	    	$room_min	 = $get['roomMin'];
+	     	$room_max	 = $get['roomMax'];
+	     	$bath_min	 = $get['bathMin'];
+	        $bath_max	 = $get['bathMax'];
+	     	$max_price	 = $get['price'];
+	        $kindOfPlace = $get['place'];
+
+	        $query = "SELECT * FROM dwellings INNER JOIN apartment_images 
+                                 ON dwellings.dwelling_Id = apartment_images.dwelling_Id
+                         WHERE 
+	        			 rangeType        = '$typeOfDeal'         					       AND 
+	        			 (no_of_rooms 	  >= '$room_min' AND no_of_rooms     <= '$room_max') AND 
+	        			 (no_of_bathrooms >= '$bath_min' AND no_of_bathrooms <= '$bath_max') AND
+	        			 price 			  < '$max_price'								   AND
+	        			 type             = '$kindOfPlace'"; 
+	        return parent::getResultSetAsArray($query);
+
+
+		}
 	}
 ?>

@@ -1,0 +1,17 @@
+#SearchParametres{
+	position: relative;
+		background-color: yellow;
+	width: 300px;
+	height: 500px;
+	display: inline-block;
+}
+#specific, #flexible{
+	position: absolute;
+}
+#Apartments{
+	
+	background-color: red;
+	width: 500px;
+	height: 500px;
+	display: inline-block;
+}
