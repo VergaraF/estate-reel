@@ -1,0 +1,56 @@
+#del, #showM{
+	width: 50px;
+    border: none;
+    height: 20px;
+    width: auto;
+    font-size: 12pt;
+    margin-top: 3px;
+    background-color: #424250;
+    color: white;
+}
+
+#showM{
+	width: 130px;
+	font-size: 10pt;
+	height: 20px;
+}
+
+
+#convo{
+	position: relative;
+	background-color: white;
+	width: 250px;
+	height: 500px;
+	display: inline-block;
+	border: 1px ;
+	border-style: solid;
+	border-color: #C00;	
+}
+#messages{
+	position: relative;
+	background-color: red;
+	width: 500px;
+	height: 500px;
+	display: inline-block;
+}
+#container{
+	margin-top: 10px;
+	display: inline-block;
+}
+#messageInput{
+}
+#sendMess{
+}
+
+#list{
+	width: 100%;
+	background-color: #c00;
+	height: 30px;
+	font-weight: bold;
+	font-size: 14pt;
+	color: white;
+}
+
+#uName{
+	margin-left: 10px;
+}

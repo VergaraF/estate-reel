@@ -7,8 +7,8 @@ background: #F0F0F0;
 }  
 
 #carousel_container{
-	width: 100%;
-	float: left;
+width: 100%;
+float: left;
 }
   
 #carousel_ul {  
@@ -32,7 +32,7 @@ height:380px;
 background: #000000;  
 margin-top:10px;  
 margin-bottom:10px;  
-margin-left:300px;  
+margin-left: 2.5%;  
 margin-right:5px;  
 
 }  

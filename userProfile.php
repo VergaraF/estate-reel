@@ -9,9 +9,9 @@
 		require('PreCode/authentication.php');
 	?>
 	<form name="buttons" method="POST" action="">
-		<input name="editProfile" type="submit" value="Edit Profile" />
-		<input name="changePass" type="submit" value="Change Password" />
-		<input name="deactivate" type="submit" value="Deactivate My Account" />
+		<input id="sort" name="editProfile" type="submit" value="Edit Profile" />
+		<input id="sort" name="changePass" type="submit" value="Change Password" />
+		<input id="sort" name="deactivate" type="submit" value="Deactivate My Account" />
 
 	</form>
 	<form name="updateProfile" method="POST" action="">
@@ -37,7 +37,7 @@
 							 "<tr><td>Email</td>" 	   . "<td><input name='email' type='text' value='" 		. $profileInfo[$row]['email'] 	  ."'></td></tr>" .
 							 "<tr><td>Username</td>"   . "<td><input name='username' type='text' value='" 	. $profileInfo[$row]['username']  ."'></td></tr>" .
 							 "<tr><td>Phone Num</td>"  . "<td><input name='phoneNum' type='text' value='" 	. $profileInfo[$row]['phoneNumber']  ."'></td></tr>" .
-							 "<tr><td></td>"   		   . "<td><input name='update' type='submit' value='Save Changes'></td></tr>";
+							 "<tr><td></td>"   		   . "<td><input id='sort' name='update' type='submit' value='Save Changes'></td></tr>";
 					}
 				}
 			} elseif (isset($_POST['changePass'])) {
@@ -47,7 +47,7 @@
 					<input name="oldPass" type="password" placeholder="Old Password" required /><br>
 					<input name="newPass" type="password" placeholder="New Password" required /><br>
 					<input name="confirmNewPass" type="password" placeholder="Confirm New Password" required /><br>
-					<input name="resetPass" type="submit" value="Reset">
+					<input id="sort" name="resetPass" type="submit" value="Reset">
 				</form>
 		
 					</tbody>
@@ -67,7 +67,7 @@
 							 "<tr><td>Username</td>"   . "<td><input name='username' type='text' value='" 	. $profileInfo[$row]['username']  ."'></td></tr>" .
 							 "<tr><td>Description</td>". "<td><textarea name='description' type='text' ></textarea></td></tr>" .
 							 "<input type='hidden' name='hiddenUserId' value='" . $profileInfo[$row]['user_id'] . "'>" . 
-							 "<tr><td></td>"   		   . "<td><input name='ban' type='submit' value='Ban this user'></td></tr>";
+							 "<tr><td></td>"   		   . "<td><input id='ssort' name='ban' type='submit' value='Ban this user'></td></tr>";
 					}
 				}
 			} elseif (isset($_POST['ban'])) {

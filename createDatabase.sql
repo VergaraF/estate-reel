@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2014 at 02:14 AM
+-- Generation Time: Nov 27, 2014 at 04:29 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `address_info` (
   `province` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `zip_code` varchar(10) DEFAULT NULL,
   `country` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `address_info`
@@ -45,7 +45,9 @@ INSERT INTO `address_info` (`address_id`, `house_no`, `street_name`, `apartment_
 (1, '6165', 'Sherbrooke W', '-', 'Montreal', 'Quebec', 'H4B 1M1', 'Canada'),
 (2, '1212', 'Av. Des Pins Ouest', '-', 'Montreal', 'Quebec', 'H3G 1A9', 'Canada'),
 (3, '1800', 'St. Mathieu', '-', 'Montreal', 'Quebec', 'H3H 2S8', 'Canada'),
-(4, '4301', 'Rue de la Roche', '-', 'Montreal', 'Quebec', ' H2J 3H8', 'Canada');
+(4, '4301', 'Rue de la Roche', '-', 'Montreal', 'Quebec', ' H2J 3H8', 'Canada'),
+(5, '10355', 'Avenue de Bois-de-Boulogne', '-', 'Montreal', 'Quebec', 'H4N 1L5', 'Canada'),
+(6, '2202', 'Avenue Barclay', '-', 'Montreal', 'Quebec', ' H3S 1J3', 'Canada');
 
 -- --------------------------------------------------------
 
@@ -59,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `apartment_images` (
   `file_name` varchar(200) NOT NULL,
   `file_size` varchar(200) NOT NULL,
   `file_type` varchar(200) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `apartment_images`
@@ -69,7 +71,9 @@ INSERT INTO `apartment_images` (`image_id`, `dwelling_Id`, `file_name`, `file_si
 (1, 1, '25-11-2014-1751623174-1416942326.jpg', '24298', 'image/jpeg'),
 (2, 2, '25-11-2014-2083539209-1416942467.jpg', '15757', 'image/jpeg'),
 (3, 3, '25-11-2014-229986368-1416948293.jpg', '11578', 'image/jpeg'),
-(4, 4, '25-11-2014-981023916-1416948467.jpg', '16059', 'image/jpeg');
+(4, 4, '25-11-2014-981023916-1416948467.jpg', '16059', 'image/jpeg'),
+(5, 6, '27-11-2014-709063908-1417101914.jpg', '11897', 'image/jpeg'),
+(6, 7, '27-11-2014-1166065820-1417102017.jpg', '3968', 'image/jpeg');
 
 -- --------------------------------------------------------
 
@@ -166,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `dwellings` (
   `no_of_living_rooms` int(11) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
   `rangeType` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `dwellings`
@@ -176,7 +180,9 @@ INSERT INTO `dwellings` (`dwelling_Id`, `address_id`, `user_id`, `type`, `descri
 (1, 1, 2, 'Apartment', 'Bright, large studios (1 1/2, 2 1/2) for rent in well maintained, quiet building. All dwellings are clean and renovated with hardwood floors. Include hot water, heating, stove, fridge. Laundry room in the building, janitor on the spot. Close to transport and services (metro Vendome and bus 105). Close to Concordia University (Loyola Campus). \r\n\r\nAvailable now, December 1st or January 1st. Price range between $550 and $590 per month. \r\nTo visit call 514-294-5868', 1, 1, 1, 500, 'Rent'),
 (2, 2, 1, 'Apartment', 'Large windows frame bright, gorgeous views of Mount Royal and downtown. You?ll feel right at home with an updated kitchen, a renovated bathroom, a balcony and hardwood flooring. Need to get to McGill, Royal Victoria or MGH? Skip transit because they?re all easy walks from La Tour Horizon.\r\n\r\n', 2, 1, 1, 1699, 'Rent'),
 (3, 3, 1, 'Apartment', 'includes fridge, stove, oven, washing machine, dryer and a dishwasher; \r\ndoesn''t include electricity \r\n\r\nit''s located on Rene-levesque street and it has a balcony (long one) on the street \r\n\r\n', 1, 1, 1, 1500, 'Rent'),
-(4, 4, 3, 'Apartment', 'Super appart 3.5 au coeur du plateau mont royal, entre le Parc Lafontaine et l?avenue Mont Royal 1 chambre ferm?e 1 grand salon cuisine ouverte balcon beaucoup de rangements parquet tr?s lumineux laundry room et garage ? v?lo dans l?immeuble Le loyer comprend les charges Cession de bail Libre ? partir du 22 d?cembre commerces et restaurants ? 3 minutes ? pied pr?s du m?tro Mont-Royal lignes de bus 11 et 14 au pied de l?immeuble Je rentre en Californie le 22 d?cembre, la fin du mois de d?cembre est gratuite. Ideal pour les nouveaux arrivants ? Montr?al: je pr?f?rerais laisser les meubles (table, canap?, lit, bureau, diff?rents meubles ikea achet?s neufs il y a un peu plus d?un an, tous en parfait ?tat) faites moi une offre, et il ne vous restera plus qu?a poser vos valises! ', 2, 3, 2, 390000, 'Sale');
+(4, 4, 3, 'Apartment', 'Super appart 3.5 au coeur du plateau mont royal, entre le Parc Lafontaine et l?avenue Mont Royal 1 chambre ferm?e 1 grand salon cuisine ouverte balcon beaucoup de rangements parquet tr?s lumineux laundry room et garage ? v?lo dans l?immeuble Le loyer comprend les charges Cession de bail Libre ? partir du 22 d?cembre commerces et restaurants ? 3 minutes ? pied pr?s du m?tro Mont-Royal lignes de bus 11 et 14 au pied de l?immeuble Je rentre en Californie le 22 d?cembre, la fin du mois de d?cembre est gratuite. Ideal pour les nouveaux arrivants ? Montr?al: je pr?f?rerais laisser les meubles (table, canap?, lit, bureau, diff?rents meubles ikea achet?s neufs il y a un peu plus d?un an, tous en parfait ?tat) faites moi une offre, et il ne vous restera plus qu?a poser vos valises! ', 2, 3, 2, 390000, 'Sale'),
+(6, 5, 4, 'Apartment', 'Disponible 5 1/2 haut de duplex dans une environnement calme,securitere ,deux pas d''ecole et un grand parc \r\n-cuisine en bois et granite \r\n-salle de bain completement renove \r\n-planche bois de franc \r\n-peintur', 3, 1, 1, 1200, 'Rent'),
+(7, 6, 4, 'Apartment', 'hello,\r\nRoom for rent in a large apartment 8 and a half. The room has large windows and its own private bathroom ! The House is not furnished but the rest of the apartment is! The apartment is inhabited by three academics, two and a Master Degree .\r\n\r\nIs a 10-15 minute walk from the metro Outremont and ', 1, 1, 1, 350, 'Rent');
 
 -- --------------------------------------------------------
 
@@ -204,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`user_id`, `firstname`, `lastname`, `email`, `phoneNumber`, `username`, `password`, `salt`, `type`, `rangeType`) VALUES
 (1, 'Ajmer', 'Singh', 'Ajmer@ajmer.ca', '438 323 2343', 'ajmer', '45FIRt6yMSMKE', '45fee2b5f36b86015a2ab9564e765aa0b582f7c66a74c54c4b153128048bc888', 'Tenant', 'Regular'),
 (2, 'Fabian', 'Vergara', 'hg-faver@hotmail.com', '222 324 2344', 'faver', 'd3yTTT.8w5.oo', 'd341cc51ea668a4bd7475905756b864efca1138c6d3e32a0ce0c0357d0f7acc3', 'Landlord', 'Admin'),
-(3, 'Camilo', 'Vides', 'Camilo@yahoo.ca', '514 233 3421', 'camilo', '1clHbzjXlIRxY', '1ca5f21a442fb85c95de9bfffcaa38851341959ea1dfd38ff9b852aaa630104f', 'Tenant', 'Regular'),
+(3, 'Some', 'dude', 'Camilo@yahoo.ca', '514 233 3421', 'dude', '1clHbzjXlIRxY', '1ca5f21a442fb85c95de9bfffcaa38851341959ea1dfd38ff9b852aaa630104f', 'Tenant', 'Regular'),
 (4, 'Roy', 'Khoury', 'roy@yahoo.ca', '1231231234', 'roy_123', '62bwEQDGc3xOk', '62c52c5b9ea4aecc8f8b5d6b2b9308c14792d56d2ad6fe3956fb580143960e98', 'Tenant', 'Regular');
 
 --
@@ -261,12 +267,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `address_info`
 --
 ALTER TABLE `address_info`
-MODIFY `address_id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `address_id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `apartment_images`
 --
 ALTER TABLE `apartment_images`
-MODIFY `image_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `image_id` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `bannedusers`
 --
@@ -286,7 +292,7 @@ MODIFY `cr_id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 -- AUTO_INCREMENT for table `dwellings`
 --
 ALTER TABLE `dwellings`
-MODIFY `dwelling_Id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `dwelling_Id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `users`
 --

@@ -100,7 +100,7 @@ footer {
     left: 0;
 }
 
-#apt{
+#apt, #apt2{
     height: auto;
     margin-top: 10px;
     border-right: 2px solid #C00;
@@ -108,7 +108,14 @@ footer {
     width: 99%;
     text-align: justify;
     cursor: pointer;
+}
 
+#apt2{
+    cursor: default;
+}
+
+#image{
+    width: 190px;
 }
 
 #placeImg{
@@ -120,11 +127,27 @@ footer {
     width: 80%;
 }
 
+#descr{
+    width: 70%;
+}
+
 #price{
     margin-top: 50px;
     height: 10px;
 }
+#delete, #edit, #showD{
+    width: 55px;
+    border: none;
+    height: 35px;
+    font-size: 12pt;
+    margin-top: 5px;
+    background-color: #424250;
+    color: white;
+}
 
+#showD{
+    width: auto;
+}
 #number{
     font-weight: bolder;
     font-size: 17pt;
@@ -141,7 +164,7 @@ footer {
     color: white;
 }
 
-#sort:hover{
+#sort:hover, #delete:hover, #edit:hover, #showD:hover, #del:hover{
     background-color: #E4DCD5;
     color: #424250;
 }

@@ -55,33 +55,36 @@
 	
 ?>
 	<h2>List of Apartments/Houses</h2>
-	<table border="1" align="center">
+	<table id="apt" align="center">
 		<tbody>
 			<tr>
-				<th>Image</th>
-				<th>Description</th>
-				<th>Price</th>
-				<th>Options</th>
+				<th id="image">Image</th>
+				<th id="descr" style="width: 800px;">Description</th>
+				<th id="priceH">Price</th>
+				<th id="option">Options</th>
 			</tr>
+		</tbody>
+	</table>
 			<?php
 				if (count($rs) > 0) {
 					for($row = 0; $row < count($rs); $row++){
+						echo "<table id='apt2' align='center'><tbody>";
 						echo "<tr>";
-						echo "<td><img style='width:100px;height:100px;' src='apartment_images/" . $rs[$row]['file_name'] . "'/></td>" .
-							 "<td>" . $rs[$row]['description'] . "</td>" .
-							 "<td>" . $rs[$row]['price'] . "</td>";
+						echo "<td><img id='placeImg' src='apartment_images/" . $rs[$row]['file_name'] . "'/></td>" .
+							 "<td style='width: 800px;'>" . $rs[$row]['description'] . "</td>" .
+							 "<td>" . $rs[$row]['price'] . "$</td>";
 			?>
 						<form name="deleteApart" method="POST" action="">
 							<input name="hiddenID" type="hidden" value="<?php echo $rs[$row]['dwelling_Id']; ?>" />
 							<td>
-								<input name='delete' type='submit' value='Delete' />
-								<input name='edit' type='submit' value='Edit' />
+								<input id='delete' name='delete' type='submit' value='Delete' />
+								<input id='edit' name='edit' type='submit' value='Edit' />
 							</td>
 						</form>
 						<form name="showApart" method="GET" action="showDetails.php">
 							<td>
 								<input name="hiddenID" type="hidden" value="<?php echo $rs[$row]['dwelling_Id']; ?>" />
-								<input name='showDetail' type='submit' value='Show Details' />
+								<input id='showD' name='showDetail' type='submit' value='Show Details' />
 							</td>
 						</form>
 			<?php

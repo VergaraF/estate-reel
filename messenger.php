@@ -2,6 +2,7 @@
     <head>
         <title>Estate R&eacuteel</title>
         <link rel="stylesheet" type="text/css" href="CSS/mainLayout.css">
+        <link rel="stylesheet" type="text/css" href="CSS/messengerLayout.css">
         <script type= "text/javascript" src = "JS/countries.js"></script>
     </head>	
 	<?php 
@@ -17,10 +18,10 @@
 		}
 		 ?>
 		<form name="createForm" method="POST" action="createConvo.php">
-			<input type="submit" name="create" value="Create Conversation">
+			<input id="sort" type="submit" name="create" value="Create Conversation">
 		</form>
 	<div id="convo">
-		<p>List of conversations</p>
+		<p id="list">List of conversations</p>
 		<table>
 			<?php 
 				$user_id = $loginObj->getUserId();
@@ -30,10 +31,10 @@
 					$otherUsername = $conversationObj->getUsernameForConvo($userIdsArray, $user_id);
 			?>
 					<form name='conversationDelete' method='POST' action=''>
-						<tr><td> <?php echo $otherUsername ?> </td>
+						<tr><td> <?php echo "<p id='uName'> >" . $otherUsername . "<p>" ?> </td>
 						<input type="hidden" name="c_id" value=" <?php echo $convoArray[$row]['conversationId']; ?>">
-						<td><input type='submit' name='show' value='show messages'></td>
-						<td><input type='submit' name='deleteConvo' value='Delete'></td></tr>
+						<td><input id='showM' type='submit' name='show' value='show messages'></td>
+						<td><input id='del' type='submit' name='deleteConvo' value='x'></td></tr>
 					</form>
 		<?php  } ?>
 		</table>
@@ -52,7 +53,7 @@
 						<tr>
 							<td> <?php echo $loginObj->getUsername($messages[$row]['sender']) . ": " . $messages[$row]['reply_message']; ?> </td>
 							<input type="hidden" name="cr_id_toDeleteMessage" value="<?php echo $messages[$row]['cr_id'] ?>">
-							<td><input type='submit' name='deleteMess' value='Delete'></td>
+							<td><input id='del' type='submit' name='deleteMess' value='x'></td>
 						</tr>
 					</form>
 			<?php } ?>
@@ -77,30 +78,6 @@
 	</div>
 	</div>
 	</section>
-<style type="text/css">
-#convo{
-	position: relative;
-	background-color: yellow;
-	width: 250px;
-	height: 500px;
-	display: inline-block;
-}
-#messages{
-	position: relative;
-	background-color: red;
-	width: 500px;
-	height: 500px;
-	display: inline-block;
-}
-#container{
-	margin-top: 10px;
-	display: inline-block;
-}
-#messageInput{
-}
-#sendMess{
-}
 
-</style>
 </body>
 </html>

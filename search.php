@@ -10,8 +10,8 @@
           ?>
 	        <form name="search" method="GET" action="">
 	       		<label>Search : </label>
-	       		<input type="button" onClick="window.location.href='search.php?type=specific'" value="Specific search"></input>
-				<input type="button" onClick="window.location.href='search.php?type=flexible'" value="Flexible search"></input>
+	       		<input id="sort" type="button" onClick="window.location.href='search.php?type=specific'" value="Specific search"></input>
+				<input id="sort" type="button" onClick="window.location.href='search.php?type=flexible'" value="Flexible search"></input>
 	        </form>
 	      
 	      <section id="SearchParametres">
