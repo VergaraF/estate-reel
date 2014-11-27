@@ -27,8 +27,7 @@
 		}
 
 		public function getLastId(){
-			echo $this->createConnection()->insert_id;
-			return $this->createConnection()->insert_id;
+			return $this->connection->insert_id;
 
 		}
 

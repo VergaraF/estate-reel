@@ -20,26 +20,26 @@
 	      		<form id="flexible"name="flexible" method="GET" action="">
 	      			<input type="text" name="searchMethod" hidden value="flexible"></input>
 	      			<label>You are looking for ...</label>
-	      			<input name="type" type="radio" value="Sale">Sale</input>
+	      			<input name="type" type="radio" value="Sale" required>Sale</input>
 					<input name="type" type="radio" value="Rent">Rent</input></br>
 
 					<label>Bedrooms : </label>
 					<label>Min </label>
-					<input type="number" name="roomMin" value="" placeholder="1" min="0" max="10"></input>
+					<input type="number" name="roomMin" value="" placeholder="1" min="0" max="10" required></input>
 					<label>Max </label>
-					<input type="number" name="roomMax" value="" placeholder="2" min="0" max="10"></input></br>
+					<input type="number" name="roomMax" value="" placeholder="2" min="0" max="10" required></input></br>
 
 					<label>Bathrooms : </label>
 					<label>Min </label>
-					<input type="number" name="bathMin" value="" placeholder="1" min="0" max="10"></input>
+					<input type="number" name="bathMin" value="" placeholder="1" min="0" max="10" required></input>
 					<label>Max </label>
-					<input type="number" name="bathMax" value="" placeholder="2" min="0" max="10"></input></br>
+					<input type="number" name="bathMax" value="" placeholder="2" min="0" max="10" required></input></br>
 
 					<label>Max budget : </label>
-				    <input type="text" name="price" value="" placeholder="Not include '$'" onchange="validatePrice(this)"></input><label>$</label></br>
+				    <input type="text" name="price" value="" placeholder="Not include '$'" onchange="validatePrice(this)" required></input><label>$</label></br>
 	      			
 	      			<label>What is it? </label>
-	      			<input name="place" type="radio" value="House">House</input>
+	      			<input name="place" type="radio" value="House" required>House</input>
 					<input name="place" type="radio" value="Apartment">Apartment</input></br>
 	      			<input type="submit" name="Search" value="Search"></input>
 
@@ -50,26 +50,23 @@
 	      		<form id="specific" name="specific" method="GET" action="">
 	      			<input type="text" name="searchMethod" hidden value="specific"></input>
 	      			<label>You are looking for ...</label>
-	      			<input name="type" type="radio" value="Sale">Sale</input>
+	      			<input name="type" type="radio" value="Sale" required>Sale</input>
 					<input name="type" type="radio" value="Rent">Rent</input></br>
 
 					<label>Bedrooms : </label>
-					<input type="number" name="rooms" value="" placeholder="1" min="0" max="10"></input></br>
+					<input type="number" name="rooms" value="" placeholder="1" min="0" max="10" required></input></br>
 
 					<label>Bathrooms : </label>
-					<input type="number" name="baths" value="" placeholder="1" min="0" max="10"></input></br>
+					<input type="number" name="baths" value="" placeholder="1" min="0" max="10" required></input></br>
 
 					<label>Max budget : </label>
-				    <input type="text" name="price" value="" placeholder="Not include '$'" onchange="validatePrice(this)"></input><label>$</label></br>
+				    <input type="text" name="price" value="" placeholder="Not include '$'" onchange="validatePrice(this)" required></input><label>$</label></br>
 	      			
 	      			<label>What is it? </label>
-	      			<input name="place" type="radio" value="house">House</input>
+	      			<input name="place" type="radio" value="house" required>House</input>
 					<input name="place" type="radio" value="apartment">Apartment</input></br>
 	      			<input type="submit" name="Search" value="Search"></input>
-	      			
-
 	      		</form>
-
 	      	<?php
 	      		}
 	      	?>
@@ -97,14 +94,18 @@
 			               	   </tr>
 			              	  </table>";
 			       		     }
-			    		   }		
+			    		   }else{
+		      		   			echo "<p>No result found for the specified parameters! Please try anything else</p>";
+		      		   	   }	
 	      				break;
 	      			case 'specific':
 						$rsForSearch = $productObj->searchSpecific($_GET);
 	      				if (count($rsForSearch) > 0) {
 			      		 for($row = 0; $row < count($rsForSearch); $row++){
+		            ?>
+		            		<table id="apt" align="center" onclick="window.location.href='showDetails.php?hiddenID=<?php echo $rsForSearch[$row]['dwelling_Id']; ?>'">
+		            <?php
 		              	  echo "
-		              	 	 <table id='apt' align='center'>
 		                	  <tr id='col1'>
 		                 	   <td rowspan='3'><img id='placeImg' src='apartment_images/" . $rsForSearch[$row]['file_name'] . "'/></td>
 		                	    <td rowspan='3' id='col2'>" . $rsForSearch[$row]['description'] . "</th>
@@ -118,10 +119,12 @@
 		               	   </tr>
 		              	  </table>";
 		          	 	 }
+		      		   }else{
+		      		   		echo "<p>No result found for the specified parameters! Please try something else</p>";
 		      		   }
 	      				break;
 	      			default:
-	      				# code...
+	      				echo "<p>Something went wrong</p>";
 	      				break;
 	      		}
 	      	}

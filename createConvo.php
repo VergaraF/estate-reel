@@ -1,5 +1,10 @@
+<html>
+    <head>
+        <title>Estate R&eacuteel</title>
+        <link rel="stylesheet" type="text/css" href="CSS/mainLayout.css">
+     
+    </head>
 <?php include('PreCode/header.php'); ?>
-
 <form name="sending" method="POST" action="">
 <?php
 	if (isset($_POST['messageOwner']) && isset($_SESSION['USERNAME'])) {
@@ -15,8 +20,7 @@
 ?>
 		<select name="username">
 		<option> <?php echo $ownerName; ?> </option>
-		<textarea id="messageInput" name="message"></textarea>
-		<input name="sendMessage" type="submit" value="Send">
+		
 <?php
 	}
 	//the following statement is executed when the user clicks message the owner and he is not logged in
