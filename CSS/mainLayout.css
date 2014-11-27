@@ -130,3 +130,27 @@ footer {
     font-size: 17pt;
     color: #424250;
 }
+
+#sort{
+    width: 230px;
+    border: none;
+    height: 35px;
+    font-size: 13pt;
+    margin-top: 20px;
+    background-color: #424250;
+    color: white;
+}
+
+#sort:hover{
+    background-color: #E4DCD5;
+    color: #424250;
+}
+
+#sortBy{
+    font-size: 14pt;
+    font-weight: italic;
+}
+
+#displayApt{
+    border: none;
+}

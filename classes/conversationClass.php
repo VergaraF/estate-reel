@@ -49,7 +49,7 @@ class Conversation extends Login{
 	}
 	//this will delete the specifed conversation with all its messages
 	public function deleteConversation($conversationId){
-		$this->deleteAllMessages($conversationId);
+		self::deleteAllMessages($conversationId);
 		$query = "DELETE FROM conversation WHERE conversationId = '$conversationId'";
 		Database::executeSqlQuery($query);
 	}

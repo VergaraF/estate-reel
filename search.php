@@ -79,8 +79,10 @@
 	      				$rsForSearchFlex = $productObj->searchFlexible($_GET);
 	      				if (count($rsForSearchFlex) > 0) {
 	      				 for($row = 0; $row < count($rsForSearchFlex); $row++){
+	      	?>
+	      					<table id="apt" align="center" onclick="window.location.href='showDetails.php?hiddenID=<?php echo $rsForSearchFlex[$row]['dwelling_Id']; ?>'">
+	      	<?php
 			              	  echo "
-			              	 	 <table id='apt' align='center'>
 			                	  <tr id='col1'>
 			                 	   <td rowspan='3'><img id='placeImg' src='apartment_images/" . $rsForSearchFlex[$row]['file_name'] . "'/></td>
 			                	    <td rowspan='3' id='col2'>" . $rsForSearchFlex[$row]['description'] . "</th>

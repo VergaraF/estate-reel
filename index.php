@@ -3,6 +3,8 @@
         <title>Estate R&eacuteel</title>
         <link rel="stylesheet" type="text/css" href="CSS/mainLayout.css">
         <link rel="stylesheet" type="text/css" href="CSS/carouselLayout.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
      
     </head>
     <?php include('PreCode/header.php'); 
@@ -19,15 +21,15 @@
     ?>
 
     <form name="filters" method="GET" action="">
-    <label>Sort by : </label>
-    <button type="button" onClick="window.location.href='index.php?sortBy=low'">Price: Ascendant</button>
-    <button type="button" onClick="window.location.href='index.php?sortBy=high'">Price: Descendant</button>
-    <button type="button" onClick="window.location.href='index.php?sortBy=Sale'">For sale only</button>
-    <button type="button" onClick="window.location.href='index.php?sortBy=Rent'">For rent only</button>
+    <label id="sortBy">Sort by : </label>
+    <button type="button" id="sort" onClick="window.location.href='index.php?sortBy=low'">Price: Ascendant</button>
+    <button type="button" id="sort" onClick="window.location.href='index.php?sortBy=high'">Price: Descendant</button>
+    <button type="button" id="sort" onClick="window.location.href='index.php?sortBy=Sale'">For sale only</button>
+    <button type="button" id="sort"  onClick="window.location.href='index.php?sortBy=Rent'">For rent only</button>
     </form>
  <!--   //SLIDER HERE -->
 <div id='carousel_container'>  
-  <div id='left_scroll'><a href='javascript:slide("left");'><img id="arrowLeft"src='apartment_images/left.png' /></a></div>  
+
     <div id='carousel_inner'>  
         <ul id='carousel_ul'>  
             <li><img src='apartment_images/1.jpg' /></li>  
@@ -38,7 +40,7 @@
   
         </ul>  
     </div>  
-  <div id='right_scroll'><a href='javascript:slide("right");'><img id="arrowRight"src='apartment_images/right.png' /></a></div>  
+ 
   <input type='hidden' id='hidden_auto_slide_seconds' value=0 />  
 </div> 
 
@@ -184,7 +186,7 @@ ul/li structure can be replaced by any other html structure as div/div, div/span
                             <td></td>
                           </tr>
                           <tr id="price">
-                            <td><p id="number"> <?php echo $rsForIndex[$row]['price']; ?> </p></td>
+                            <td><p id="number"> <?php echo $rsForIndex[$row]['price'] . "$"; ?> </p></td>
                           </tr>
                     </tbody>
                 </table>

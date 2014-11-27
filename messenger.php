@@ -7,8 +7,15 @@
 	<?php 
 		include('PreCode/header.php'); 
 		require('PreCode/authentication.php');
+		
 	?>
 	<div id="container">
+		<?php 
+			if (isset($_SESSION['MESSAGE'])) {
+			echo $_SESSION['MESSAGE'];
+			unset($_SESSION['MESSAGE']);
+		}
+		 ?>
 		<form name="createForm" method="POST" action="createConvo.php">
 			<input type="submit" name="create" value="Create Conversation">
 		</form>
@@ -41,13 +48,15 @@
 			<?php
 				for ($row=0; $row < count($messages); $row++) { 
 			?>
-					<form name='sendOrDelete' method='POST' action=''>
+					<form name='deleteMessage' method='POST' action=''>
 						<tr>
 							<td> <?php echo $loginObj->getUsername($messages[$row]['sender']) . ": " . $messages[$row]['reply_message']; ?> </td>
 							<input type="hidden" name="cr_id_toDeleteMessage" value="<?php echo $messages[$row]['cr_id'] ?>">
 							<td><input type='submit' name='deleteMess' value='Delete'></td>
 						</tr>
+					</form>
 			<?php } ?>
+					<form name='sendMessage' method='POST' action=''>
 						<div id="sendMess">
 							<input type="hidden" name="c_id_toSendMessage" value="<?php echo $_POST['c_id']; ?>">
 							<textarea id="messageInput" name="message"></textarea>

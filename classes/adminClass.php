@@ -17,8 +17,8 @@
 										phoneNumber  = '$phone',	  rangeType 	 = '$range'
 									WHERE user_id = '$user_id'";
 			parent::executeSqlQuery($update);
-			
-		
+			header("location: adminPanel.php?action=user");
+			exit();
 		}
 
 		public function modifyUser($user_id){
@@ -44,6 +44,8 @@
 			//delete the user from the database
 			parent::executeSqlQuery("DELETE FROM bannedusers WHERE user_id = '$user_id'");
 			parent::executeSqlQuery("DELETE FROM users WHERE user_id = '$user_id'");
+			header("location: adminPanel.php?action=user");
+			exit();
 		}
 
 		public function banUser($user_id, $message){

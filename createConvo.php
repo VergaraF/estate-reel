@@ -18,6 +18,7 @@
 			}
 		}
 ?>
+		<label>Send message to the owner: </label>
 		<select name="username">
 		<option> <?php echo $ownerName; ?> </option>
 		
@@ -31,6 +32,7 @@
 	//this if statement is executed when the user wants to send a message to the owner by clicking create conversation
 	if (!isset($ownerName)) {
 ?>
+		<label>Send message to the owner: </label>
 		<select name="username">
 		<option>Select Username</option>
 		<?php 
@@ -58,10 +60,10 @@
 				$convo_id = $conversationObj->checkConversation($user_id, $user_two);
 				if (count($convo_id) === 1) {
 					$conversationObj->sendMessage($convo_id[0]['conversationId'], $_POST['message'], $user_id);
-					echo "created conversation and sent the message";
+					$databaseObj->printMessage("MESSAGE", "Your message has been sent successfully", "messenger.php");
 				}
 			}else{
-				echo "the specified user doesnt exit in the database";
+				echo "the specified user does not exit in the database";
 			}
 			
 		}
