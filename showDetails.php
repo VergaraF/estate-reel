@@ -6,10 +6,14 @@
     </head>
 <?php 
 	include('PreCode/header.php');
-	require('PreCode/authentication.php');
+	//require('PreCode/authentication.php');
 ?>
 	<form name="viewOwnerProfile" method="POST" action="">
 		<input name="viewProfile" type="submit" value="View Owner Profile" >
+	</form>
+	<form name="mess" method="POST" action="createConvo.php">
+		<input name="hiddenID2" type="hidden" value="<?php echo $_GET['hiddenID']; ?>" >
+		<input name="messageOwner" type="submit" value="Message the Owner" >
 	</form>
 	<div id="col1">
 		<div id="gallery">
@@ -48,6 +52,13 @@
 						</tbody>
 					</table><br>
 			<?php	
+				}elseif (isset($_POST['messageOwner'])) {
+					if (isset($_SESSION['USERNAME'])) {
+						header("location: createConvo.php");
+						exit();
+					}else{
+						$databaseObj->printMessage("MESSAGE", "You need to login in order to send a message to the owner", "login.php");
+					}
 				}
 				$databaseObj->createConnection();
 				$allTheImages = $productObj->getAllTheImages($_GET['hiddenID']);

@@ -107,6 +107,7 @@ footer {
     border-bottom: 1px solid #C00;
     width: 99%;
     text-align: justify;
+    cursor: pointer;
 
 }
 

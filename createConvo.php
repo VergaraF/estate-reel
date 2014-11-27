@@ -1,15 +1,42 @@
 <?php include('PreCode/header.php'); ?>
 
 <form name="sending" method="POST" action="">
-	<select name="username">
-	<option>Select Username</option>
-	<?php 
-		$userArray = $loginObj->getAllUsers();
-		for ($row=0; $row < count($userArray); $row++) { 
-			echo "<option>". $userArray[$row]['username'] ."</option>";
+<?php
+	if (isset($_POST['messageOwner']) && isset($_SESSION['USERNAME'])) {
+		$user_id = null;
+		$resultSetArray = $productObj->displaySpecificProduct($_POST['hiddenID2']);
+		if (count($resultSetArray) === 1) {
+			$user_id = $resultSetArray[0]['user_id'];
+			$userInfoArray = $loginObj->getUserById($user_id);
+			if(count($userInfoArray) === 1){
+				$ownerName = $userInfoArray[0]['username'];
+			}
 		}
-	?>
-	</select>
+?>
+		<select name="username">
+		<option> <?php echo $ownerName; ?> </option>
+		<textarea id="messageInput" name="message"></textarea>
+		<input name="sendMessage" type="submit" value="Send">
+<?php
+	}
+	//the following statement is executed when the user clicks message the owner and he is not logged in
+	elseif (!isset($_SESSION['USERNAME'])) {
+		$databaseObj->printMessage("MESSAGE", "You need to login in order to send a message to the owner", "login.php");
+	}
+	
+	//this if statement is executed when the user wants to send a message to the owner by clicking create conversation
+	if (!isset($ownerName)) {
+?>
+		<select name="username">
+		<option>Select Username</option>
+		<?php 
+			$userArray = $loginObj->getAllUsers();
+			for ($row=0; $row < count($userArray); $row++) { 
+				echo "<option>". $userArray[$row]['username'] ."</option>";
+			}
+		?>
+		</select>
+<?php } ?>
 	<textarea id="messageInput" name="message"></textarea>
 	<input name="sendMessage" type="submit" value="Send">
 </form>	

@@ -237,23 +237,40 @@ $JssorUtils$.$AddEvent(window, "load", ScaleSlider);
         }else{
             $rsForIndex = $productObj->displayAllProducts();
         }
+
+        if (isset($_POST['apartment_id'])) {
+            echo $_POST['apartment_id'];
+        }
         
         if (count($rsForIndex) > 0) {
             for($row = 0; $row < count($rsForIndex); $row++){
-                echo "
-                <table id='apt' align='center'>
-                  <tr id='col1'>
-                    <td rowspan='3'><img id='placeImg' src='apartment_images/" . $rsForIndex[$row]['file_name'] . "'/></td>
-                    <td rowspan='3' id='col2'>" . $rsForIndex[$row]['description'] . "</th>
-                    <th></th>
-                  </tr>
-                  <tr>
-                    <td></td>
-                  </tr>
-                  <tr id='price'>
-                    <td><p id='number'>" . $rsForIndex[$row]['price'] . "$</p></td>
-                  </tr>
-                </table>";
+    ?>
+                <table id="apt" align="center" onclick="window.location.href='showDetails.php?hiddenID= <?php echo $rsForIndex[$row]['dwelling_Id']; ?> '">
+                    <tbody>
+                        <tr id="col1">
+                            <td rowspan="3"><img id="placeImg" src="apartment_images/<?php echo $rsForIndex[$row]['file_name']; ?> "/></td>
+                            <input name="hiddenID" type="hidden" value=" <?php echo $rsForIndex[$row]['dwelling_Id']; ?> ">
+                            <td rowspan="3" id="col2"> 
+                                <?php 
+                                    if (strlen($rsForIndex[$row]['description']) > 500) {
+                                        $str = substr($rsForIndex[$row]['description'], 0, 500) . "...";
+                                        echo $str;
+                                    }else{
+                                        echo $rsForIndex[$row]['description'];
+                                    }
+                                ?> 
+                            </th>
+                            <th></th>
+                          </tr>
+                          <tr>
+                            <td></td>
+                          </tr>
+                          <tr id="price">
+                            <td><p id="number"> <?php echo $rsForIndex[$row]['price']; ?> </p></td>
+                          </tr>
+                    </tbody>
+                </table>
+    <?php
             }
         }
     ?>
