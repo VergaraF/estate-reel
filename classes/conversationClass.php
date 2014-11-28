@@ -16,6 +16,7 @@ class Conversation extends Login{
 		}
 	}
 
+	//this function is used to return the usernane of the user who is having conversation with the logged in user
 	public function getUsernameForConvo($rsArrayWithIds, $user_id){
 		$user_id_one = $rsArrayWithIds[0]['user_one'];
 		$user_id_two = $rsArrayWithIds[0]['user_two'];
@@ -32,6 +33,7 @@ class Conversation extends Login{
 		}
 	}
 
+	//this function is used to return an array that contains both usernames for the specific conversation
 	public function getUsernamesForConvo($rsArrayWithIds){
 		$user_id_one = $rsArrayWithIds[0]['user_one'];
 		$user_id_two = $rsArrayWithIds[0]['user_two'];
@@ -43,6 +45,7 @@ class Conversation extends Login{
 		return $arrayWithNames;
 	}
 
+	//this function returns user_ids for the specified conversation
 	public function getUserIdsForConvo($conversationId){
 		$query = "SELECT user_one, user_two FROM conversation WHERE conversationId = $conversationId";
 		return Database::getResultSetAsArray($query);
@@ -79,24 +82,19 @@ class Conversation extends Login{
 		return Database::getResultSetAsArray($query);
 	}
 
+	//this function will delete all the message inside the specified conversation
 	public function deleteAllMessages($conversation_id){
 		$query = "DELETE FROM conversation_reply WHERE conversationId = '$conversation_id'";
 		Database::executeSqlQuery($query);
 	}
 
+	//this function will return all the conversations for all the users
 	public function displayAllConversations(){
 		$query = "SELECT * FROM conversation";
 		return Database::getResultSetAsArray($query);
 	}
 
-	//DO WE REALLY NEED THIS FUNCTION?? BECAUSE WITH THIS FUNCTION THE USER WILL ABLE TO DELETE ALL THE CONVERSATIONS AT ONE CLICK
-	//************************************************************//
-	public function deleteAllConversations($user_id){
-		$result = $this->displayConversations($user_id);
-		$this->deleteAllMessages();
-		$this->deleteConversation();
-	}
-	//************************************************************//
+	//this function is used to get the sender id to know who sent which message
 	public function getSender($conversation_id){
 		$query = "SELECT sender FROM conversation_reply WHERE conversationId = '$conversation_id'";
 		$senderId = Database::getResultSetAsArray($query);

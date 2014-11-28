@@ -4,6 +4,7 @@
 			return parent::getAllUsers();
 		}
 
+		//this function is used to process the post request which will update the profile information of a user
 		public function updateUser($post){
 			$user_id 	= $post['hiddenUserId'];
 			$first_name = $post['firstname'];
@@ -21,10 +22,7 @@
 			exit();
 		}
 
-		public function modifyUser($user_id){
-			//this function will modify the status of a user (admin or regular)
-		}
-
+		//this function is used by the admin to deactivate other users of the site
 		public function deleteUser($user_id){
 			$allTheConversations = Conversation::displayConversations($user_id);
 
@@ -48,6 +46,7 @@
 			exit();
 		}
 
+		//this function is used to ban a user from the site
 		public function banUser($user_id, $message){
 			$rs = parent::checkBannedUsers($user_id);
 			if(count($rs) == 0){
@@ -68,14 +67,7 @@
 			//call insertOrUpdateProduct function inside product class
 		}
 
-		public function listAllConversations(){
-			//call displayConversations function inside conversation class
-		}
-
-		public function listAllMessages(){
-			//call displayMessages function inside conversation class
-		}
-
+		//this function is used to get the opposite range of user
 		public function getOppositeRange($actualRange){
 			if (strcmp($actualRange, "Admin") === 0){
 				return "Regular";

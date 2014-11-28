@@ -1,6 +1,7 @@
 <?php
 	class Login extends Database{
-		
+		//parent::createConnection();
+		//this function is used to process the signup form and register the user into the database
 		public function processSignupForm($post){
 			$passwordLength = 8;
 			$firstName 	 = parent::getEscaped($post['firstName']);
@@ -31,13 +32,15 @@
 			}
 		}
 
+		//this function is used to process the login form
 		public function processLoginForm($post){
 			$username = parent::getEscaped(strtolower($post['username']));
 			$password = parent::getEscaped($post['password']);
 
-		
- 
+			//the following statement is storing associative array of users inside the variable '$getInfo'
 			$getInfo = parent::getResultSetAsArray("SELECT * FROM users WHERE username = '$username'");
+
+			//the following if statement executes when the username provided by the user exists in the database
 			if(count($getInfo) > 0){
 				for($row = 0; $row < count($getInfo); $row++){
 					$db_username = $getInfo[$row]['username'];
@@ -53,9 +56,9 @@
 			}else{
 				parent::printMessage("MESSAGE", "The username does not exist in the database! Do you really have an account?", "login.php");
 			}
-
 		}
 
+		//this function is used to return the rangeType(Regular or Admin) of the user by using the username
 		public function getRangeType($username){
 			$rangeTypeArray = $this->getSpecificUser($username);
 			$type = "";
@@ -65,33 +68,39 @@
 			return $type;
 		}
 
+		//this function is used to get the number of days the user is banned from the site
 		public function dateDiff ($d1, $d2) {
-			// Return the number of days between the two dates:
 			  return round(abs(strtotime($d1)-strtotime($d2))/86400);
-		} 
+		}
 
+		//this function returns the associative array which contains a specific users' information by using username
 		public function getSpecificUser($username){
 			return parent::getResultSetAsArray("SELECT * FROM users WHERE username = '$username'");
 		}
 
+		//this function is used to determine if the user is logged in or not
 		public static function isLoggedIn(){
 			return (isset($_SESSION["USERNAME"]) && $_SESSION["USERNAME"] != null);
 		}
 
+		//this function is called when a user creates an account on the site. Its purpose is to insert user information into the database
 		public function insertUser($query){
 			if (parent::createConnection()->query($query) === TRUE) {
 			    parent::printMessage("MESSAGE", "Your account has been created! You may login now", "login.php");
 			}
 		}
 
+		//this function is used to return an associative array containing all the existing users' information 
 		public function getAllUsers(){
 			return parent::getResultSetAsArray("SELECT * FROM users");
 		}
 
+		//this function is used to return an associative array containing a single user information by using his id
 		public function getUserById($user_id){
 			return parent::getResultSetAsArray("SELECT * FROM users WHERE user_id = '$user_id'");
 		}
 
+		//this function returns the user_id of the user who is logged into the site
 		public function getUserId(){
 			$selectUserId = "SELECT user_id FROM users WHERE username = '" . $_SESSION['USERNAME'] . "'";
 			$rs = mysqli_query(parent::createConnection(), $selectUserId);
@@ -104,6 +113,7 @@
 			return null;
 		}
 
+		//this function returns the username by using the user_id
 		public function getUsername($user_id){
 			$usernameRs = parent::getResultSetAsArray("SELECT username FROM users WHERE user_id = $user_id");
 			if (count($usernameRs) === 1) {
@@ -111,10 +121,12 @@
 			}
 		}
 
+		//this function returns an associative array containing all the information of the logged in user
 		public function getUsersProfileInfo(){
 			return parent::getResultSetAsArray("SELECT * FROM users WHERE username = '" . $_SESSION['USERNAME'] . "'");
 		}
 
+		//this function is used to update the profile information a user. It processes the post request.
 		public function updateProfile($post){
 			$user_id 	= $this->getUserId();
 			$first_name = $post['firstname'];
@@ -130,6 +142,7 @@
 			$_SESSION['USERNAME'] = $username;
 		}
 
+		//this function is executed when the user clicks on logout button
 		public function logout(){
 			unset($_SESSION['USERNAME']);
 			header("location: index.php");
@@ -138,10 +151,12 @@
 			session_destroy();
 		}
 
+		//this function selects the user who us banned from the site by using his id
 		public function checkBannedUsers($user_id){
 			return parent::getResultSetAsArray("SELECT * FROM bannedusers WHERE user_id = '$user_id'");
 		}
 
+		//this function is used to display any message which is stored inside the session variable  
 		public function displayMessage(){
 			if(isset($_SESSION['MESSAGE'])) {
 				echo "<p>" . $_SESSION['MESSAGE'] . "</p>";
@@ -149,14 +164,17 @@
 			}
 		}
 
+		//this function is used to return the hashed password of users
 		public function hashPassword($password, $salt){
 			return crypt($password, $salt);
 		}
 
+		//this function is used to generate a salt and return it
 		public function generateSalt($password, $username){
 			return hash('sha256', uniqid(mt_rand(), true) . $password . strtolower($username));
 		}
 
+		//this function is used to change password of the user
 		public function resetPassword($old, $new, $confirmNew){
 			if(strcmp($new, $confirmNew) === 0){
 				$query = "SELECT password, salt FROM users WHERE username = '" . $_SESSION['USERNAME'] . "'";
@@ -180,6 +198,7 @@
 			}
 		}
 
+		//this function is used to delete a user's account with all the other data he has posted
 		public function deactivateAccount(){
 			$user_id = $this->getUserId();
 			//get all the conversations of that user
