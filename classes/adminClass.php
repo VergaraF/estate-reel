@@ -1,8 +1,5 @@
 <?php 
 	class Admin extends Login{
-		public function displayAllUsers(){
-			return parent::getAllUsers();
-		}
 
 		//this function is used to process the post request which will update the profile information of a user
 		public function updateUser($post){
@@ -18,8 +15,6 @@
 										phoneNumber  = '$phone',	  rangeType 	 = '$range'
 									WHERE user_id = '$user_id'";
 			parent::executeSqlQuery($update);
-			header("location: adminPanel.php?action=user");
-			exit();
 		}
 
 		//this function is used by the admin to deactivate other users of the site
@@ -43,7 +38,6 @@
 			parent::executeSqlQuery("DELETE FROM bannedusers WHERE user_id = '$user_id'");
 			parent::executeSqlQuery("DELETE FROM users WHERE user_id = '$user_id'");
 			header("location: adminPanel.php?action=user");
-			exit();
 		}
 
 		//this function is used to ban a user from the site
@@ -53,18 +47,17 @@
 				$description = Database::getEscaped($message);
 				$query = "INSERT INTO bannedUsers(banId, user_id, description, from_ ,to_) VALUES(DEFAULT, '$user_id', '$description', NOW() , ADDDATE(NOW(), INTERVAL 31 DAY))";
 				Database::executeSqlQuery($query);
+				header("location: adminPanel.php?action=user");
 			}else{
 				echo "this user is already banned from this site";
 			}
 		}
 
-		public function listAllProducts(){
-			return Product::displayAllProducts();
-		}
-
-		public function updateProduct($post){
-			return Product::insertOrUpdateProduct($post);
-			//call insertOrUpdateProduct function inside product class
+		//this function is used to un-ban the banned user
+		public function unBanUser($user_id){
+			$query = "DELETE FROM bannedUsers WHERE user_id = '$user_id'";
+			Database::executeSqlQuery($query);
+			header("location: adminPanel.php?action=user");
 		}
 
 		//this function is used to get the opposite range of user

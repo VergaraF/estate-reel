@@ -50,7 +50,6 @@
 	}
 
 	$type = $loginObj->getRangeType($_SESSION['USERNAME']);
-
 	$rs = $productObj->displayOwnerProducts($userId);
 	
 ?>
@@ -71,7 +70,7 @@
 						echo "<table id='apt2' align='center'><tbody>";
 						echo "<tr>";
 						echo "<td><img id='placeImg' src='apartment_images/" . $rs[$row]['file_name'] . "'/></td>" .
-							 "<td style='width: 800px;'>" . $rs[$row]['description'] . "</td>" .
+							 "<td style='width: 800px;'>" . $databaseObj->cutDownTheDescription($rs[$row]['description']) . "</td>" .
 							 "<td>" . $rs[$row]['price'] . "$</td>";
 			?>
 						<form name="deleteApart" method="POST" action="">

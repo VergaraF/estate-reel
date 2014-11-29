@@ -1,8 +1,6 @@
 <?php
 	class Database{
-
 		public $connection;
-		
 		//this function is used to create a connection with the database 
 		public function createConnection(){
 			$servername = "localhost";
@@ -74,6 +72,15 @@
 		    session_write_close();
 		    header("Location: $location");
 		    exit();
+		}
+
+		public function cutDownTheDescription($description){
+			if (strlen($description) > 500) {
+	            $str = substr($description, 0, 500) . "...";
+	            return $str;
+	        }else{
+	            return $description;
+	        }
 		}
 
 		//this method is used to get the extension of the image

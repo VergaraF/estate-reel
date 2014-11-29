@@ -42,6 +42,7 @@
             <button  type="button" onClick="window.location.href='displayApartments.php'">Your places</button>
             <button type="button" onClick="window.location.href='search.php'">Search</button>
             <button type="button" onClick="window.location.href='logout.php'">Logout</button>
+            <?php echo "Logged in as: " . $_SESSION['USERNAME']; ?>
         </aside>
         <?php
           }elseif($loginObj->isLoggedIn() && strcmp($range, "Admin") === 0) {
@@ -55,6 +56,7 @@
             <button  type="button" onClick="window.location.href='displayApartments.php'">Your places</button>
             <button type="button" onClick="window.location.href='search.php'">Search</button>
             <button type="button" onClick="window.location.href='logout.php'">Logout</button>
+            <?php echo "Logged in as: " . $_SESSION['USERNAME']; ?>
         </aside>
         <?php
           } else{

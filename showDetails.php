@@ -4,10 +4,7 @@
         <link rel="stylesheet" type="text/css" href="CSS/mainLayout.css">
         <link rel="stylesheet" type="text/css" href="CSS/styles.css">
     </head>
-<?php 
-	include('PreCode/header.php');
-	//require('PreCode/authentication.php');
-?>
+<?php include('PreCode/header.php'); ?>
 	<form name="viewOwnerProfile" method="POST" action="">
 		<input name="viewProfile" type="submit" value="View Owner Profile" >
 	</form>

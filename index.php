@@ -171,14 +171,7 @@ ul/li structure can be replaced by any other html structure as div/div, div/span
                             <td rowspan="3"><img id="placeImg" src="apartment_images/<?php echo $rsForIndex[$row]['file_name']; ?> "/></td>
                             <input name="hiddenID" type="hidden" value=" <?php echo $rsForIndex[$row]['dwelling_Id']; ?> ">
                             <td rowspan="3" id="col2"> 
-                                <?php 
-                                    if (strlen($rsForIndex[$row]['description']) > 500) {
-                                        $str = substr($rsForIndex[$row]['description'], 0, 500) . "...";
-                                        echo $str;
-                                    }else{
-                                        echo $rsForIndex[$row]['description'];
-                                    }
-                                ?> 
+                                <?php echo $databaseObj->cutDownTheDescription($rsForIndex[$row]['description']); ?> 
                             </th>
                             <th></th>
                           </tr>
